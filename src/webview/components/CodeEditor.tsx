@@ -179,7 +179,7 @@ export function CodeEditor({ code, language, onCodeChange }: CodeEditorProps) {
 
     // Calculate height: each line is line-height * font-size, plus padding
     // Use at least 6 lines min, cap so it scrolls for large files
-    const visibleLines = Math.max(6, lineCount + 1); // +1 for breathing room
+    const visibleLines = Math.max(6, lineCount + 2); // +2 for breathing room below last line
     // line-height is 1.5, font-size ~13px = ~19.5px per line, + 16px padding
     const contentHeight = visibleLines * 19.5 + 16;
     const editorHeight = Math.min(contentHeight, 400); // max 400px, then scroll
