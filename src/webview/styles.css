@@ -320,10 +320,23 @@ body {
     margin: 0;
     padding: 0;
     background: transparent !important;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    white-space: inherit;
+    letter-spacing: inherit;
+    word-spacing: inherit;
+    tab-size: inherit;
   }
 
   .kodo-code-highlight code {
     background: transparent !important;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    word-spacing: inherit;
+    tab-size: inherit;
   }
 
   /* Textarea on top — transparent text, visible caret */
