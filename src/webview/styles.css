@@ -251,7 +251,7 @@ body {
 
   /* ── Code Editor (highlighted textarea overlay) ── */
   .kodo-code-editor {
-    position: relative;
+    display: flex;
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 15%, transparent);
@@ -261,6 +261,33 @@ body {
 
   .kodo-code-editor:focus-within {
     border-color: var(--vscode-focusBorder);
+  }
+
+  /* Line number gutter */
+  .kodo-code-gutter {
+    flex-shrink: 0;
+    padding: 12px 0;
+    min-width: 40px;
+    text-align: right;
+    user-select: none;
+    background: color-mix(in srgb, var(--vscode-editor-background) 95%, var(--vscode-panel-border, #666) 5%);
+    border-right: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 10%, transparent);
+  }
+
+  .kodo-line-number {
+    font-family: var(--vscode-editor-font-family, 'Consolas', monospace);
+    font-size: var(--vscode-editor-font-size, 13px);
+    line-height: 1.5;
+    padding: 0 8px;
+    color: var(--vscode-editorLineNumber-foreground, #858585);
+  }
+
+  /* Editor body (highlight + textarea) */
+  .kodo-code-editor-body {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
   }
 
   /* Highlighted layer behind */
