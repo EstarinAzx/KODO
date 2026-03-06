@@ -204,10 +204,12 @@ body {
 
   /* ── Modal ── */
   .kodo-modal {
-    @apply rounded-2xl p-6 w-full max-w-sm;
+    @apply rounded-2xl p-6 w-full max-w-lg;
     background: var(--vscode-editor-background);
     border: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 12%, transparent);
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   /* ── Drag handle ── */
@@ -254,7 +256,7 @@ body {
     overflow: hidden;
     border: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 15%, transparent);
     background: var(--vscode-editor-background);
-    min-height: 140px;
+    min-height: 240px;
   }
 
   .kodo-code-editor:focus-within {
@@ -290,7 +292,7 @@ body {
     position: relative;
     z-index: 1;
     width: 100%;
-    min-height: 140px;
+    min-height: 240px;
     padding: 12px;
     margin: 0;
     border: none;
@@ -304,11 +306,16 @@ body {
     line-height: 1.5;
     white-space: pre;
     overflow: auto;
+    -webkit-text-fill-color: transparent;
   }
 
   .kodo-code-textarea::selection {
-    background: var(--vscode-editor-selectionBackground, rgba(38, 79, 120, 0.6));
-    color: transparent;
+    background: rgba(255, 255, 255, 0.15);
+    -webkit-text-fill-color: transparent;
+  }
+
+  .kodo-code-textarea::-moz-selection {
+    background: rgba(255, 255, 255, 0.15);
   }
 
   /* Shiki generated pre/code overrides inside code blocks */
