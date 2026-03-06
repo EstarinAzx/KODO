@@ -1,5 +1,6 @@
 import { h } from 'preact';
-import { SnippetIcon, PlusIcon, FolderIcon } from '../lib/icons';
+import { SnippetIcon, PlusIcon, FolderIcon, DownloadIcon, UploadIcon } from '../lib/icons';
+import { vscode } from '../lib/vscodeApi';
 
 interface HeaderProps {
     onNewSnippet: () => void;
@@ -7,6 +8,14 @@ interface HeaderProps {
 }
 
 export function Header({ onNewSnippet, onNewFolder }: HeaderProps) {
+    const handleExport = () => {
+        vscode.postMessage({ type: 'exportData' });
+    };
+
+    const handleImport = () => {
+        vscode.postMessage({ type: 'importData' });
+    };
+
     return (
         <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2 text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--vscode-editor-foreground)' }}>
@@ -14,6 +23,12 @@ export function Header({ onNewSnippet, onNewFolder }: HeaderProps) {
                 KODO
             </div>
             <div class="flex items-center gap-1">
+                <button class="kodo-btn-ghost" title="Import snippets" onClick={handleImport}>
+                    <UploadIcon size={13} />
+                </button>
+                <button class="kodo-btn-ghost" title="Export snippets" onClick={handleExport}>
+                    <DownloadIcon size={13} />
+                </button>
                 <button class="kodo-btn-ghost" title="New snippet" onClick={onNewSnippet}>
                     <PlusIcon />
                 </button>

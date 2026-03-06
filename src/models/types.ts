@@ -37,7 +37,8 @@ export interface KodoData {
 export type MessageToWebview =
     | { type: 'init'; data: KodoData }
     | { type: 'update'; data: KodoData }
-    | { type: 'snippetInserted'; snippetId: string };
+    | { type: 'snippetInserted'; snippetId: string }
+    | { type: 'importResult'; success: boolean; count: number };
 
 export type MessageFromWebview =
     | { type: 'ready' }
@@ -51,7 +52,9 @@ export type MessageFromWebview =
     | { type: 'createTag'; tag: Omit<Tag, 'id'> }
     | { type: 'updateTag'; tag: Tag }
     | { type: 'deleteTag'; tagId: string }
-    | { type: 'reorderSnippets'; sourceId: string; targetId: string; position: 'above' | 'below' };
+    | { type: 'reorderSnippets'; sourceId: string; targetId: string; position: 'above' | 'below' }
+    | { type: 'exportData' }
+    | { type: 'importData' };
 
 // ─── Utility ───
 

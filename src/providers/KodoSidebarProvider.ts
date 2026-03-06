@@ -93,6 +93,56 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
                     );
                     this.sendDataToWebview();
                     break;
+
+                case 'exportData': {
+                    const exportData = this._storage.exportData();
+                    const exportJson = JSON.stringify(exportData, null, 2);
+                    const saveUri = await vscode.window.showSaveDialog({
+                        defaultUri: vscode.Uri.file('kodo-snippets.json'),
+                        filters: { 'JSON Files': ['json'] },
+                        title: 'Export Kodo Snippets',
+                    });
+                    if (saveUri) {
+                        await vscode.workspace.fs.writeFile(
+                            saveUri,
+                            Buffer.from(exportJson, 'utf-8'),
+                        );
+                        vscode.window.showInformationMessage(
+                            `Exported ${exportData.snippets.length} snippets to ${saveUri.fsPath}`,
+                        );
+                    }
+                    break;
+                }
+
+                case 'importData': {
+                    const openUris = await vscode.window.showOpenDialog({
+                        canSelectMany: false,
+                        filters: { 'JSON Files': ['json'] },
+                        title: 'Import Kodo Snippets',
+                    });
+                    if (openUris && openUris.length > 0) {
+                        try {
+                            const fileContent = await vscode.workspace.fs.readFile(openUris[0]);
+                            const importedData = JSON.parse(
+                                Buffer.from(fileContent).toString('utf-8'),
+                            );
+                            if (!importedData.snippets || !Array.isArray(importedData.snippets)) {
+                                vscode.window.showErrorMessage('Invalid Kodo export file.');
+                                break;
+                            }
+                            await this._storage.importData(importedData, 'merge');
+                            this.sendDataToWebview();
+                            vscode.window.showInformationMessage(
+                                `Imported ${importedData.snippets.length} snippets successfully!`,
+                            );
+                        } catch (err) {
+                            vscode.window.showErrorMessage(
+                                `Failed to import: ${err instanceof Error ? err.message : 'Unknown error'}`,
+                            );
+                        }
+                    }
+                    break;
+                }
             }
         });
     }
