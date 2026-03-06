@@ -3,6 +3,7 @@
   "displayName": "KODO — Code Snippet Manager",
   "description": "Save, organize, and drag-and-drop code snippets directly in your editor. Folder & tag organization, syntax-highlighted previews, template variables, and right-click Save to KODO.",
   "version": "0.1.0",
+  "license": "MIT",
   "publisher": "kodo",
   "repository": {
     "type": "git",

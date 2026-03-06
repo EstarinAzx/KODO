@@ -132,4 +132,14 @@ Works with **VS Code**, **Cursor**, and **Antigravity**.
 
 ---
 
+## 👤 Credits
+
+Created by **[EstarinAzx](https://github.com/EstarinAzx)**
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
 **Enjoy KODO!** 🎉
