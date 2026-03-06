@@ -1,0 +1,99 @@
+{
+  "name": "kodo",
+  "displayName": "KODO — Code Snippet Manager",
+  "description": "Save, organize, and drag-and-drop code snippets directly in your editor. Folder & tag organization, syntax-highlighted previews, template variables, and right-click Save to KODO.",
+  "version": "0.1.0",
+  "publisher": "kodo",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Snippets",
+    "Other"
+  ],
+  "keywords": [
+    "snippets",
+    "code snippets",
+    "snippet manager",
+    "code manager",
+    "drag and drop"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "kodo",
+          "title": "KODO",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "kodo": [
+        {
+          "type": "webview",
+          "id": "kodoSidebar",
+          "name": "Snippets"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "kodo.saveSelection",
+        "title": "Save to KODO"
+      },
+      {
+        "command": "kodo.insertSnippet",
+        "title": "KODO: Insert Snippet at Cursor"
+      },
+      {
+        "command": "kodo.exportSnippets",
+        "title": "KODO: Export Snippets"
+      },
+      {
+        "command": "kodo.importSnippets",
+        "title": "KODO: Import Snippets"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "kodo.saveSelection",
+          "group": "9_kodo"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build:css": "npx tailwindcss -i ./src/webview/styles.css -o ./dist/webview/tailwind-output.css --minify",
+    "build:webpack": "webpack --mode production",
+    "build": "npm run build:css && npm run build:webpack",
+    "watch:css": "npx tailwindcss -i ./src/webview/styles.css -o ./dist/webview/tailwind-output.css --watch",
+    "watch:webpack": "webpack --mode development --watch",
+    "watch": "npm run build:css && concurrently \"npm run watch:css\" \"npm run watch:webpack\"",
+    "compile": "webpack --mode development",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "autoprefixer": "^10.4.17",
+    "concurrently": "^8.2.2",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^6.9.1",
+    "mini-css-extract-plugin": "^2.7.7",
+    "postcss": "^8.4.33",
+    "postcss-loader": "^8.0.0",
+    "tailwindcss": "^3.4.1",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "shiki": "^1.1.2"
+  }
+}

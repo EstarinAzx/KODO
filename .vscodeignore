@@ -1,0 +1,12 @@
+.vscode/**
+.vscode-test/**
+src/**
+node_modules/**
+!node_modules/shiki/**
+*.ts
+!dist/**
+tailwind.config.js
+postcss.config.js
+webpack.config.js
+tsconfig.json
+.gitignore
