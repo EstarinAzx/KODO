@@ -17,7 +17,8 @@ export function CodePreview({ code, language }: CodePreviewProps) {
         );
     }
 
-    const html = highlight(code, language);
+    // Wrap in <pre> for the preview cards so newlines are preserved
+    const html = `<pre style="margin:0;padding:0;background:transparent;white-space:pre;"><code>${highlight(code, language)}</code></pre>`;
 
     return (
         <div

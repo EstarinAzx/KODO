@@ -308,12 +308,18 @@ body {
     right: 0;
     bottom: 0;
     padding: 8px 12px 24px 12px;
-    overflow: hidden;
+    overflow: auto;
     pointer-events: none;
     font-family: var(--vscode-editor-font-family, 'Consolas', monospace);
     font-size: var(--vscode-editor-font-size, 13px);
     line-height: 1.5;
     white-space: pre;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .kodo-code-highlight::-webkit-scrollbar {
+    display: none;
   }
 
   .kodo-code-highlight pre {
