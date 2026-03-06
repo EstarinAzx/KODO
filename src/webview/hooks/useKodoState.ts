@@ -103,7 +103,7 @@ export function useKodoState(): KodoState {
             );
         }
 
-        return [...snippets].sort((a, b) => b.updatedAt - a.updatedAt);
+        return [...snippets];
     }, [data.snippets, activeFolderId, activeTagId, searchQuery]);
 
     return {
