@@ -2,6 +2,8 @@
 
 > Save, organize, and instantly reuse code snippets right from your editor sidebar.
 
+![Drag and drop snippets into your editor](media/drag-and-drop.gif)
+
 ## ✨ Features
 
 ### 📁 Folder Organization
