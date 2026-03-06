@@ -150,13 +150,19 @@ export function CodeEditor({ code, language, onCodeChange }: CodeEditorProps) {
         }
     }, [onCodeChange, replaceRange]);
 
-    // Sync scroll between textarea and highlight layer
+    // Sync scroll between textarea, highlight layer, and gutter
     const handleScroll = useCallback(() => {
         const textarea = textareaRef.current;
-        const highlightEl = textarea?.parentElement?.querySelector('.kodo-code-highlight') as HTMLElement;
-        if (textarea && highlightEl) {
+        if (!textarea) return;
+        const editorBody = textarea.parentElement;
+        const highlightEl = editorBody?.querySelector('.kodo-code-highlight') as HTMLElement;
+        const gutterEl = textarea.closest('.kodo-code-editor')?.querySelector('.kodo-code-gutter') as HTMLElement;
+        if (highlightEl) {
             highlightEl.scrollTop = textarea.scrollTop;
             highlightEl.scrollLeft = textarea.scrollLeft;
+        }
+        if (gutterEl) {
+            gutterEl.scrollTop = textarea.scrollTop;
         }
     }, []);
 

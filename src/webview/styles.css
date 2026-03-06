@@ -271,7 +271,17 @@ body {
     user-select: none;
     background: color-mix(in srgb, var(--vscode-editor-background) 95%, var(--vscode-panel-border, #666) 5%);
     border-right: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 10%, transparent);
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+  }
+
+  .kodo-code-gutter::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
   }
 
   .kodo-line-number {
