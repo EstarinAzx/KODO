@@ -114,9 +114,8 @@ body {
   .kodo-badge {
     @apply inline-flex items-center rounded-full px-2 py-0.5 font-medium cursor-default;
     font-size: 10px;
-    background: color-mix(in srgb, var(--vscode-badge-background) 18%, transparent);
-    color: var(--vscode-descriptionForeground, #888);
-    opacity: 0.65;
+    background: color-mix(in srgb, var(--vscode-badge-background) 55%, transparent);
+    color: var(--vscode-badge-foreground);
   }
 
   /* ── Snippet card ── */
