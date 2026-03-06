@@ -122,7 +122,7 @@ export function SnippetEditor({ snippet, data, onClose }: SnippetEditorProps) {
                 {/* Buttons */}
                 <div class="flex gap-3 justify-end">
                     <button class="kodo-btn-secondary" onClick={onClose}>Cancel</button>
-                    <button class="kodo-btn" onClick={handleSave}>{snippet ? 'Update' : 'Save'}</button>
+                    <button class="kodo-btn" onMouseDown={() => { (document.activeElement as HTMLElement)?.blur(); }} onClick={handleSave}>{snippet ? 'Update' : 'Save'}</button>
                 </div>
             </div>
         </div>
@@ -138,6 +138,10 @@ interface FieldProps {
 }
 
 function Field({ label, value, onChange, ref }: FieldProps) {
+    const handleChange = (e: Event) => {
+        onChange((e.target as HTMLInputElement).value);
+    };
+
     return (
         <div class="mb-4">
             <label class="block text-xs mb-1.5" style={{ color: 'var(--vscode-descriptionForeground)' }}>{label}</label>
@@ -146,7 +150,8 @@ function Field({ label, value, onChange, ref }: FieldProps) {
                 type="text"
                 class="kodo-input"
                 value={value}
-                onInput={(e) => onChange((e.target as HTMLInputElement).value)}
+                onInput={handleChange}
+                onChange={handleChange}
             />
         </div>
     );
