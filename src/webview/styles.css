@@ -256,7 +256,6 @@ body {
     overflow: hidden;
     border: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 15%, transparent);
     background: var(--vscode-editor-background);
-    min-height: 240px;
   }
 
   .kodo-code-editor:focus-within {
@@ -288,7 +287,7 @@ body {
     position: relative;
     flex: 1;
     min-width: 0;
-    overflow: hidden;
+    overflow: auto;
   }
 
   /* Highlighted layer behind */
@@ -323,12 +322,11 @@ body {
     position: relative;
     z-index: 1;
     width: 100%;
-    min-height: 240px;
     padding: 8px 12px;
     margin: 0;
     border: none;
     outline: none;
-    resize: vertical;
+    resize: none;
     background: transparent;
     color: transparent;
     caret-color: var(--vscode-editorCursor-foreground, #fff);
@@ -336,7 +334,7 @@ body {
     font-size: var(--vscode-editor-font-size, 13px);
     line-height: 1.5;
     white-space: pre;
-    overflow: auto;
+    overflow: hidden;
     -webkit-text-fill-color: transparent;
     /* Reset browser textarea defaults */
     -webkit-appearance: none;

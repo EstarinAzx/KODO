@@ -167,14 +167,22 @@ export function CodeEditor({ code, language, onCodeChange }: CodeEditorProps) {
 
     const highlightedHtml = highlight(code, language);
 
-    // Line numbers
+    // Line numbers and auto-sizing
     const lineCount = (code || '').split('\n').length;
     const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1);
 
+    // Calculate height: each line is line-height * font-size, plus padding
+    // Use at least 6 lines min, cap so it scrolls for large files
+    const visibleLines = Math.max(6, lineCount + 1); // +1 for breathing room
+    // line-height is 1.5, font-size ~13px = ~19.5px per line, + 16px padding
+    const contentHeight = visibleLines * 19.5 + 16;
+    const editorHeight = Math.min(contentHeight, 400); // max 400px, then scroll
+    const needsScroll = contentHeight > 400;
+
     return (
-        <div class="kodo-code-editor">
+        <div class="kodo-code-editor" style={{ height: `${editorHeight}px` }}>
             {/* Line numbers gutter */}
-            <div class="kodo-code-gutter">
+            <div class="kodo-code-gutter" style={{ height: needsScroll ? undefined : `${editorHeight}px` }}>
                 {lineNumbers.map(n => (
                     <div key={n} class="kodo-line-number">{n}</div>
                 ))}
@@ -200,6 +208,7 @@ export function CodeEditor({ code, language, onCodeChange }: CodeEditorProps) {
                     spellcheck={false}
                     autocomplete="off"
                     autocapitalize="off"
+                    style={{ height: `${editorHeight}px` }}
                 />
             </div>
         </div>
