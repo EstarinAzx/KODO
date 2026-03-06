@@ -226,7 +226,7 @@ function escapeHtml(str: string): string {
 }
 
 function tokensToHtml(tokens: Token[]): string {
-    let html = '<pre style="margin:0;padding:0;background:transparent;"><code>';
+    let html = '';
     for (const token of tokens) {
         const escaped = escapeHtml(token.value);
         const color = TOKEN_STYLES[token.type];
@@ -236,13 +236,12 @@ function tokensToHtml(tokens: Token[]): string {
             html += escaped;
         }
     }
-    html += '</code></pre>';
     return html;
 }
 
 export function useShiki() {
     const highlight = useCallback((code: string, lang: string): string => {
-        if (!code) return '<pre style="margin:0;padding:0;"><code></code></pre>';
+        if (!code) return '';
         const tokens = tokenize(code, lang);
         return tokensToHtml(tokens);
     }, []);

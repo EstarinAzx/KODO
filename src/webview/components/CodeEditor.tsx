@@ -200,7 +200,7 @@ export function CodeEditor({ code, language, onCodeChange }: CodeEditorProps) {
                 <div
                     class="kodo-code-highlight"
                     dangerouslySetInnerHTML={{
-                        __html: highlightedHtml || `<pre><code>${escapeHtml(code || ' ')}</code></pre>`
+                        __html: highlightedHtml || escapeHtml(code || ' ')
                     }}
                 />
                 {/* Editable textarea (on top, transparent text) */}
