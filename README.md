@@ -7,8 +7,12 @@
 ### 📁 Folder Organization
 Create nested folders to keep your snippets organized by project, language, or category.
 
+![Folder organization](media/folder_manager.png)
+
 ### 🏷️ Tag System
 Add color-coded tags for cross-cutting categorization. Filter your snippet library by tag with one click.
+
+![Tag system](media/tag_system.png)
 
 ### 🔍 Instant Search
 Search across snippet names, code content, descriptions, and languages — results update as you type.
@@ -27,6 +31,8 @@ One-click insertion with full **template variable** support — tab through plac
 ### 🖱️ Right-Click Save
 Select code in your editor → Right-click → **"Save to KODO"** — saves your selection instantly.
 
+![Right-click save to KODO](media/right_click_save.png)
+
 ### 📤 Import / Export
 Back up your entire snippet collection or share it with teammates as a `.json` file.
 
@@ -38,6 +44,8 @@ Built-in code editor with:
 - Auto-indentation and smart bracket closing
 - Line numbers with scroll sync
 - Syntax highlighting while editing
+
+![Code editor](media/code_editor.png)
 
 ---
 
