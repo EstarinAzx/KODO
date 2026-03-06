@@ -266,19 +266,20 @@ body {
   /* Line number gutter */
   .kodo-code-gutter {
     flex-shrink: 0;
-    padding: 12px 0;
-    min-width: 40px;
+    padding: 8px 0;
+    min-width: 38px;
     text-align: right;
     user-select: none;
     background: color-mix(in srgb, var(--vscode-editor-background) 95%, var(--vscode-panel-border, #666) 5%);
     border-right: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 10%, transparent);
+    overflow: hidden;
   }
 
   .kodo-line-number {
     font-family: var(--vscode-editor-font-family, 'Consolas', monospace);
     font-size: var(--vscode-editor-font-size, 13px);
     line-height: 1.5;
-    padding: 0 8px;
+    padding: 0 6px 0 4px;
     color: var(--vscode-editorLineNumber-foreground, #858585);
   }
 
@@ -293,15 +294,17 @@ body {
   /* Highlighted layer behind */
   .kodo-code-highlight {
     position: absolute;
-    inset: 0;
-    padding: 12px;
-    overflow: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 8px 12px;
+    overflow: hidden;
     pointer-events: none;
     font-family: var(--vscode-editor-font-family, 'Consolas', monospace);
     font-size: var(--vscode-editor-font-size, 13px);
     line-height: 1.5;
     white-space: pre;
-    word-wrap: break-word;
   }
 
   .kodo-code-highlight pre {
@@ -316,11 +319,12 @@ body {
 
   /* Textarea on top — transparent text, visible caret */
   .kodo-code-textarea {
+    display: block;
     position: relative;
     z-index: 1;
     width: 100%;
     min-height: 240px;
-    padding: 12px;
+    padding: 8px 12px;
     margin: 0;
     border: none;
     outline: none;
@@ -334,6 +338,14 @@ body {
     white-space: pre;
     overflow: auto;
     -webkit-text-fill-color: transparent;
+    /* Reset browser textarea defaults */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+    letter-spacing: normal;
+    word-spacing: normal;
+    tab-size: 2;
   }
 
   .kodo-code-textarea::selection {
