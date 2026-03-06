@@ -17,6 +17,22 @@ body {
   background: var(--vscode-sideBar-background);
 }
 
+/* ─── Shiki css-variables theme token colors ─── */
+/* Maps Shiki tokens to VS Code-like syntax colors */
+:root {
+  --shiki-color-text: var(--vscode-editor-foreground, #d4d4d4);
+  --shiki-color-background: var(--vscode-editor-background, #1e1e1e);
+  --shiki-token-constant: #4fc1ff;
+  --shiki-token-string: #ce9178;
+  --shiki-token-comment: #6a9955;
+  --shiki-token-keyword: #c586c0;
+  --shiki-token-parameter: #9cdcfe;
+  --shiki-token-function: #dcdcaa;
+  --shiki-token-string-expression: #ce9178;
+  --shiki-token-punctuation: #d4d4d4;
+  --shiki-token-link: #4fc1ff;
+}
+
 /* ─── Scrollbar — ultra thin ─── */
 ::-webkit-scrollbar {
   width: 4px;
@@ -228,5 +244,77 @@ body {
     border: 1px solid color-mix(in srgb, var(--vscode-editorHoverWidget-border, #555) 30%, transparent);
     z-index: 50;
     white-space: nowrap;
+  }
+
+  /* ── Code Editor (highlighted textarea overlay) ── */
+  .kodo-code-editor {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 15%, transparent);
+    background: var(--vscode-editor-background);
+    min-height: 140px;
+  }
+
+  .kodo-code-editor:focus-within {
+    border-color: var(--vscode-focusBorder);
+  }
+
+  /* Highlighted layer behind */
+  .kodo-code-highlight {
+    position: absolute;
+    inset: 0;
+    padding: 12px;
+    overflow: auto;
+    pointer-events: none;
+    font-family: var(--vscode-editor-font-family, 'Consolas', monospace);
+    font-size: var(--vscode-editor-font-size, 13px);
+    line-height: 1.5;
+    white-space: pre;
+    word-wrap: break-word;
+  }
+
+  .kodo-code-highlight pre {
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
+  }
+
+  .kodo-code-highlight code {
+    background: transparent !important;
+  }
+
+  /* Textarea on top — transparent text, visible caret */
+  .kodo-code-textarea {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 140px;
+    padding: 12px;
+    margin: 0;
+    border: none;
+    outline: none;
+    resize: vertical;
+    background: transparent;
+    color: transparent;
+    caret-color: var(--vscode-editorCursor-foreground, #fff);
+    font-family: var(--vscode-editor-font-family, 'Consolas', monospace);
+    font-size: var(--vscode-editor-font-size, 13px);
+    line-height: 1.5;
+    white-space: pre;
+    overflow: auto;
+  }
+
+  .kodo-code-textarea::selection {
+    background: var(--vscode-editor-selectionBackground, rgba(38, 79, 120, 0.6));
+    color: transparent;
+  }
+
+  /* Shiki generated pre/code overrides inside code blocks */
+  .kodo-code-block pre,
+  .kodo-code-block code {
+    background: transparent !important;
+    margin: 0;
+    padding: 0;
   }
 }

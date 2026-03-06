@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { useState, useEffect, useRef } from 'preact/hooks';
 import { Snippet, Folder, Tag, KodoData } from '../hooks/useKodoState';
 import { vscode } from '../lib/vscodeApi';
+import { CodeEditor } from './CodeEditor';
 
 interface SnippetEditorProps {
     snippet: Snippet | null; // null = new snippet
@@ -97,18 +98,13 @@ export function SnippetEditor({ snippet, data, onClose }: SnippetEditorProps) {
 
                 <Field label="Tags (comma-separated)" value={tagsStr} onChange={setTagsStr} />
 
-                {/* Code textarea */}
+                {/* Code editor with syntax highlighting */}
                 <div class="mb-4">
                     <label class="block text-xs mb-1.5" style={{ color: 'var(--vscode-descriptionForeground)' }}>Code</label>
-                    <textarea
-                        class="kodo-input"
-                        style={{
-                            fontFamily: 'var(--vscode-editor-font-family)',
-                            minHeight: '100px',
-                            resize: 'vertical',
-                        }}
-                        value={code}
-                        onInput={(e) => setCode((e.target as HTMLTextAreaElement).value)}
+                    <CodeEditor
+                        code={code}
+                        language={language}
+                        onCodeChange={setCode}
                     />
                 </div>
 
