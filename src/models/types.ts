@@ -49,7 +49,7 @@ export type MessageFromWebview =
     | { type: 'createFolder'; folder: Omit<Folder, 'id'> }
     | { type: 'updateFolder'; folder: Folder }
     | { type: 'deleteFolder'; folderId: string }
-    | { type: 'createTag'; tag: Omit<Tag, 'id'> }
+    | { type: 'createTag'; tag: Omit<Tag, 'id'> & { id?: string } }
     | { type: 'updateTag'; tag: Tag }
     | { type: 'deleteTag'; tagId: string }
     | { type: 'reorderSnippets'; sourceId: string; targetId: string; position: 'above' | 'below' }

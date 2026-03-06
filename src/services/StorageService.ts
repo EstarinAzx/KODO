@@ -142,9 +142,9 @@ export class StorageService {
         return this.getData().tags;
     }
 
-    async createTag(partial: Omit<Tag, 'id'>): Promise<Tag> {
+    async createTag(partial: Omit<Tag, 'id'> & { id?: string }): Promise<Tag> {
         const data = this.getData();
-        const tag: Tag = { ...partial, id: generateId() };
+        const tag: Tag = { ...partial, id: partial.id || generateId() };
         data.tags.push(tag);
         await this.setData(data);
         return tag;

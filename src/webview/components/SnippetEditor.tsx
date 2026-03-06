@@ -37,9 +37,12 @@ export function SnippetEditor({ snippet, data, onClose }: SnippetEditorProps) {
             if (existing) {
                 tagIds.push(existing.id);
             } else {
+                // Generate ID client-side so we can reference it in the snippet
+                const newTagId = Date.now().toString(36) + Math.random().toString(36).substring(2, 9);
+                tagIds.push(newTagId);
                 vscode.postMessage({
                     type: 'createTag',
-                    tag: { name: tName, color: `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)` },
+                    tag: { id: newTagId, name: tName, color: `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)` },
                 });
             }
         }
