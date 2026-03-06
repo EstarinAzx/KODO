@@ -426,15 +426,7 @@ function createSnippetCard(snippet: Snippet): HTMLElement {
         vscode.postMessage({ type: 'insertSnippet', snippetId: snippet.id, asPlainText: false });
     });
 
-    // Insert as plain text
-    const plainBtn = document.createElement('button');
-    plainBtn.className = 'kodo-btn-secondary text-xs';
-    plainBtn.innerHTML = `${ICONS.copy} Plain`;
-    plainBtn.title = 'Insert as plain text (no template variables)';
-    plainBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        vscode.postMessage({ type: 'insertSnippet', snippetId: snippet.id, asPlainText: true });
-    });
+
 
     // Edit
     const editBtn = createIconButton(ICONS.edit, 'Edit snippet', (e) => {
@@ -449,7 +441,7 @@ function createSnippetCard(snippet: Snippet): HTMLElement {
     });
 
     actionBar.appendChild(insertBtn);
-    actionBar.appendChild(plainBtn);
+
     actionBar.appendChild(editBtn);
     actionBar.appendChild(deleteBtn);
     card.appendChild(actionBar);
