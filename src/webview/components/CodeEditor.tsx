@@ -158,8 +158,8 @@ export function CodeEditor({ code, language, onCodeChange }: CodeEditorProps) {
         const highlightEl = editorBody?.querySelector('.kodo-code-highlight') as HTMLElement;
         const gutterEl = textarea.closest('.kodo-code-editor')?.querySelector('.kodo-code-gutter') as HTMLElement;
         if (highlightEl) {
-            highlightEl.scrollTop = textarea.scrollTop;
-            highlightEl.scrollLeft = textarea.scrollLeft;
+            // Use CSS transform for pixel-perfect alignment (no scrollHeight mismatch)
+            highlightEl.style.transform = `translate(${-textarea.scrollLeft}px, ${-textarea.scrollTop}px)`;
         }
         if (gutterEl) {
             gutterEl.scrollTop = textarea.scrollTop;

@@ -297,7 +297,7 @@ body {
     position: relative;
     flex: 1;
     min-width: 0;
-    overflow: auto;
+    overflow: hidden;
   }
 
   /* Highlighted layer behind */
@@ -305,21 +305,13 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 8px 12px 24px 12px;
-    overflow: auto;
+    padding: 8px 12px 80px 12px;
     pointer-events: none;
     font-family: var(--vscode-editor-font-family, 'Consolas', monospace);
     font-size: var(--vscode-editor-font-size, 13px);
     line-height: 1.5;
     white-space: pre;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .kodo-code-highlight::-webkit-scrollbar {
-    display: none;
+    will-change: transform;
   }
 
   .kodo-code-highlight pre {
@@ -351,7 +343,7 @@ body {
     position: relative;
     z-index: 1;
     width: 100%;
-    padding: 8px 12px 24px 12px;
+    padding: 8px 12px 80px 12px;
     margin: 0;
     border: none;
     outline: none;
