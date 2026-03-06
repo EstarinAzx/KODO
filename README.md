@@ -2,8 +2,6 @@
 
 > Save, organize, and instantly reuse code snippets right from your editor sidebar.
 
-![Drag and drop snippets into your editor](media/drag-and-drop.gif)
-
 ## ✨ Features
 
 ### 📁 Folder Organization
@@ -20,6 +18,8 @@ Code previews with language-aware syntax highlighting that adapts to your IDE th
 
 ### 🎯 Drag & Drop
 Drag snippets directly from the sidebar into your editor. Rearrange snippet order by dragging.
+
+![Drag and drop snippets into your editor](media/drag-and-drop.gif)
 
 ### 📋 Insert at Cursor
 One-click insertion with full **template variable** support — tab through placeholders to fill them in.
