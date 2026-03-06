@@ -1,23 +1,35 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks';
+import { createHighlighter } from 'shiki';
 
 let highlighterPromise: Promise<any> | null = null;
+
+function getHighlighter() {
+    if (!highlighterPromise) {
+        highlighterPromise = createHighlighter({
+            themes: ['css-variables'],
+            langs: [
+                'javascript', 'typescript', 'python', 'html', 'css',
+                'json', 'markdown', 'bash', 'plaintext', 'jsx', 'tsx',
+                'c', 'cpp', 'csharp', 'java', 'go', 'rust', 'ruby',
+                'php', 'swift', 'kotlin', 'yaml', 'xml', 'sql', 'lua',
+            ],
+        }).catch((err) => {
+            console.error('Shiki failed to load:', err);
+            return null;
+        });
+    }
+    return highlighterPromise;
+}
+
+// Start loading immediately on import
+getHighlighter();
 
 export function useShiki() {
     const [ready, setReady] = useState(false);
     const highlighterRef = useRef<any>(null);
 
     useEffect(() => {
-        if (!highlighterPromise) {
-            highlighterPromise = import('shiki').then(async (shiki) => {
-                const hl = await shiki.createHighlighter({
-                    themes: ['css-variables'],
-                    langs: ['javascript', 'typescript', 'python', 'html', 'css', 'json', 'markdown', 'bash', 'plaintext'],
-                });
-                return hl;
-            }).catch(() => null);
-        }
-
-        highlighterPromise.then((hl) => {
+        getHighlighter().then((hl) => {
             if (hl) {
                 highlighterRef.current = hl;
                 setReady(true);
