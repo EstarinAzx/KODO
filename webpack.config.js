@@ -40,18 +40,22 @@ const configs = [
         name: 'webview',
         target: 'web',
         mode: 'none',
-        entry: './src/webview/main.ts',
+        entry: './src/webview/App.tsx',
         output: {
             path: path.resolve(__dirname, 'dist', 'webview'),
             filename: 'main.js',
         },
         resolve: {
-            extensions: ['.ts', '.js'],
+            extensions: ['.tsx', '.ts', '.js'],
+            alias: {
+                'react': 'preact/compat',
+                'react-dom': 'preact/compat',
+            },
         },
         module: {
             rules: [
                 {
-                    test: /\.ts$/,
+                    test: /\.tsx?$/,
                     exclude: /node_modules/,
                     use: [{ loader: 'ts-loader' }],
                 },

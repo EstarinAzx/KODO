@@ -94,6 +94,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "preact": "^10.19.3",
     "shiki": "^1.1.2"
   }
 }

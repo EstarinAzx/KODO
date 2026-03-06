@@ -6,6 +6,8 @@
             "ES2020",
             "DOM"
         ],
+        "jsx": "react-jsx",
+        "jsxImportSource": "preact",
         "outDir": "dist",
         "rootDir": "src",
         "strict": true,
