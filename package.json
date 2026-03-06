@@ -4,6 +4,11 @@
   "description": "Save, organize, and drag-and-drop code snippets directly in your editor. Folder & tag organization, syntax-highlighted previews, template variables, and right-click Save to KODO.",
   "version": "0.1.0",
   "publisher": "kodo",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#1a1a2e",
+    "theme": "dark"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -16,7 +21,9 @@
     "code snippets",
     "snippet manager",
     "code manager",
-    "drag and drop"
+    "drag and drop",
+    "template variables",
+    "code organization"
   ],
   "main": "./dist/extension.js",
   "contributes": {
