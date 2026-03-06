@@ -24,10 +24,10 @@ export function Header({ onNewSnippet, onNewFolder }: HeaderProps) {
             </div>
             <div class="flex items-center gap-1">
                 <button class="kodo-btn-ghost" title="Import snippets" onClick={handleImport}>
-                    <UploadIcon size={13} />
+                    <DownloadIcon size={13} />
                 </button>
                 <button class="kodo-btn-ghost" title="Export snippets" onClick={handleExport}>
-                    <DownloadIcon size={13} />
+                    <UploadIcon size={13} />
                 </button>
                 <button class="kodo-btn-ghost" title="New snippet" onClick={onNewSnippet}>
                     <PlusIcon />
