@@ -138,25 +138,14 @@ body {
 
   /* ── Code preview block ── */
   .kodo-code-block {
-    @apply rounded-xl p-4 overflow-x-auto text-sm;
+    @apply rounded-xl p-4 overflow-auto text-sm;
     font-family: var(--vscode-editor-font-family);
     background: var(--vscode-editor-background);
     border: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 8%, transparent);
-    max-height: 120px;
-    overflow-y: hidden;
+    max-height: 160px;
     position: relative;
   }
 
-  .kodo-code-block::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 32px;
-    background: linear-gradient(transparent, var(--vscode-editor-background));
-    pointer-events: none;
-  }
 
   /* ── Folder row ── */
   .kodo-folder {
@@ -244,6 +233,18 @@ body {
     border: 1px solid color-mix(in srgb, var(--vscode-editorHoverWidget-border, #555) 30%, transparent);
     z-index: 50;
     white-space: nowrap;
+  }
+
+  /* ── Drop indicator for drag-to-reorder ── */
+  .kodo-drop-indicator {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--vscode-focusBorder);
+    z-index: 10;
+    pointer-events: none;
   }
 
   /* ── Code Editor (highlighted textarea overlay) ── */

@@ -84,6 +84,15 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
                     await this._storage.deleteTag(message.tagId);
                     this.sendDataToWebview();
                     break;
+
+                case 'reorderSnippets':
+                    await this._storage.reorderSnippets(
+                        message.sourceId,
+                        message.targetId,
+                        message.position,
+                    );
+                    this.sendDataToWebview();
+                    break;
             }
         });
     }

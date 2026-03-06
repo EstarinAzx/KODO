@@ -72,6 +72,26 @@ export class StorageService {
         await this.setData(data);
     }
 
+    async reorderSnippets(sourceId: string, targetId: string, position: 'above' | 'below'): Promise<void> {
+        const data = this.getData();
+        const sourceIdx = data.snippets.findIndex(s => s.id === sourceId);
+        if (sourceIdx === -1) return;
+
+        // Remove source from array
+        const [source] = data.snippets.splice(sourceIdx, 1);
+
+        // Find target index (after removal)
+        let targetIdx = data.snippets.findIndex(s => s.id === targetId);
+        if (targetIdx === -1) {
+            data.snippets.push(source);
+        } else {
+            if (position === 'below') { targetIdx += 1; }
+            data.snippets.splice(targetIdx, 0, source);
+        }
+
+        await this.setData(data);
+    }
+
     getSnippetById(id: string): Snippet | undefined {
         return this.getData().snippets.find(s => s.id === id);
     }

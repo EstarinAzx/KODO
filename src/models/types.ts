@@ -50,7 +50,8 @@ export type MessageFromWebview =
     | { type: 'deleteFolder'; folderId: string }
     | { type: 'createTag'; tag: Omit<Tag, 'id'> }
     | { type: 'updateTag'; tag: Tag }
-    | { type: 'deleteTag'; tagId: string };
+    | { type: 'deleteTag'; tagId: string }
+    | { type: 'reorderSnippets'; sourceId: string; targetId: string; position: 'above' | 'below' };
 
 // ─── Utility ───
 

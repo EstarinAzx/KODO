@@ -9,18 +9,24 @@ interface SnippetCardProps {
     snippet: Snippet;
     tags: Tag[];
     onEdit: (snippet: Snippet) => void;
+    onDragStartReorder?: (snippetId: string) => void;
+    onDragEndReorder?: () => void;
 }
 
-export function SnippetCard({ snippet, tags, onEdit }: SnippetCardProps) {
+export function SnippetCard({ snippet, tags, onEdit, onDragStartReorder, onDragEndReorder }: SnippetCardProps) {
     const [dragging, setDragging] = useState(false);
 
     const handleDragStart = (e: DragEvent) => {
         setDragging(true);
         e.dataTransfer?.setData('text/plain', snippet.code);
         e.dataTransfer?.setData('application/kodo-snippet-id', snippet.id);
+        onDragStartReorder?.(snippet.id);
     };
 
-    const handleDragEnd = () => setDragging(false);
+    const handleDragEnd = () => {
+        setDragging(false);
+        onDragEndReorder?.();
+    };
 
     const handleInsert = (e: MouseEvent) => {
         e.stopPropagation();
