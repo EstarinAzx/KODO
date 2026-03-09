@@ -71,19 +71,14 @@ export class FirebaseService {
         try {
             const { GithubAuthProvider, signInWithCredential } = await import('firebase/auth');
 
-            // VS Code extensions can't open popup windows in webviews.
-            // Instead, we open the GitHub OAuth flow in the user's real browser
-            // and listen for the callback via a custom URI scheme.
-            // For now, we use a simplified flow with a personal access token.
-
-            const token = await vscode.window.showInputBox({
-                prompt: 'Enter your GitHub Personal Access Token (with read:user scope)',
-                placeHolder: 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                password: true,
-                ignoreFocusOut: true,
+            // Use VS Code's built-in GitHub auth — opens browser for OAuth
+            const session = await vscode.authentication.getSession('github', ['read:user'], {
+                createIfNone: true,
             });
 
-            if (!token) return null;
+            if (!session) return null;
+
+            const token = session.accessToken;
 
             // Exchange GitHub token for Firebase credential
             const credential = GithubAuthProvider.credential(token);
@@ -92,8 +87,8 @@ export class FirebaseService {
 
             this.currentUser = {
                 id: user.uid,
-                githubUsername: user.providerData[0]?.displayName || user.displayName || 'unknown',
-                displayName: user.displayName || 'Anonymous',
+                githubUsername: session.account.label || user.displayName || 'unknown',
+                displayName: user.displayName || session.account.label || 'Anonymous',
                 avatarUrl: user.photoURL || '',
                 publishedPackCount: 0,
             };
