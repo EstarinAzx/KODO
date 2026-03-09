@@ -2,7 +2,7 @@
 
 > Save, organize, and instantly reuse code snippets right from your editor sidebar.
 
-## ✨ Features
+## Features
 
 ### Folder Organization
 Create nested folders to keep your snippets organized by project, language, or category.
@@ -14,7 +14,7 @@ Add color-coded tags for cross-cutting categorization. Filter your snippet libra
 
 ![Tag system](media/tag_system.png)
 
-### 🔍 Instant Search
+### Instant Search
 Search across snippet names, code content, descriptions, and languages — results update as you type.
 
 ### Syntax Highlighting
