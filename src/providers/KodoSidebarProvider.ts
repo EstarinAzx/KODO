@@ -12,14 +12,7 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
         private readonly _extensionUri: vscode.Uri,
         private readonly _storage: StorageService,
         private readonly _firebase: FirebaseService,
-    ) {
-        // Try to restore Firebase session
-        this._firebase.restoreSession().then(user => {
-            if (user) {
-                this._view?.webview.postMessage({ type: 'registryAuthState', user });
-            }
-        });
-    }
+    ) { }
 
     public resolveWebviewView(
         webviewView: vscode.WebviewView,
@@ -40,6 +33,12 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
             switch (message.type) {
                 case 'ready':
                     this.sendDataToWebview();
+                    // Restore Firebase session when webview is ready
+                    this._firebase.restoreSession().then(user => {
+                        if (user) {
+                            this._view?.webview.postMessage({ type: 'registryAuthState', user });
+                        }
+                    });
                     break;
 
                 case 'insertSnippet':

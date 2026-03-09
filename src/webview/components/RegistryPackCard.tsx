@@ -7,11 +7,12 @@ interface RegistryPackCardProps {
     pack: RegistryPack;
     isInstalled: boolean;
     onInstall: () => void;
+    onUninstall?: () => void;
     onRate?: (stars: number) => void;
     canRate?: boolean;
 }
 
-export function RegistryPackCard({ pack, isInstalled, onInstall, onRate, canRate }: RegistryPackCardProps) {
+export function RegistryPackCard({ pack, isInstalled, onInstall, onUninstall, onRate, canRate }: RegistryPackCardProps) {
     return (
         <div class="kodo-registry-card">
             <div class="flex items-start gap-3">
@@ -61,12 +62,23 @@ export function RegistryPackCard({ pack, isInstalled, onInstall, onRate, canRate
                         />
                     </div>
 
-                    {/* Install button */}
+                    {/* Install / Uninstall button */}
                     <div class="flex justify-end">
                         {isInstalled ? (
-                            <span class="text-xs" style={{ color: 'var(--vscode-descriptionForeground)', opacity: 0.5 }}>
-                                Already installed
-                            </span>
+                            <button
+                                class="kodo-btn"
+                                style={{
+                                    borderRadius: '9999px',
+                                    fontSize: '11px',
+                                    padding: '4px 14px',
+                                    background: 'transparent',
+                                    borderColor: 'var(--vscode-errorForeground)',
+                                    color: 'var(--vscode-errorForeground)',
+                                }}
+                                onClick={onUninstall}
+                            >
+                                Uninstall
+                            </button>
                         ) : (
                             <button
                                 class="kodo-btn"

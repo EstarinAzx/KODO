@@ -236,6 +236,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                                         pack={pack}
                                         isInstalled={installedPacks.some(p => p.id === pack.id && p.installed)}
                                         onInstall={() => registry.installPack(pack.id, pack.fileUrl, pack.manifest)}
+                                        onUninstall={() => vscode.postMessage({ type: 'uninstallPack', packId: pack.id })}
                                         onRate={registry.currentUser ? (stars) => registry.ratePack(pack.id, stars) : undefined}
                                         canRate={!!registry.currentUser}
                                     />
