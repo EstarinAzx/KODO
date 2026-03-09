@@ -1,15 +1,17 @@
 import * as vscode from 'vscode';
 import { KodoSidebarProvider } from './providers/KodoSidebarProvider';
 import { StorageService } from './services/StorageService';
+import { FirebaseService } from './services/FirebaseService';
 import { SnippetService } from './services/SnippetService';
 import { registerSaveSnippetCommand } from './commands/saveSnippet';
 import { registerInsertSnippetCommand } from './commands/insertSnippet';
 
 export function activate(context: vscode.ExtensionContext) {
     const storage = new StorageService(context);
+    const firebase = new FirebaseService(context);
 
     // ─── Sidebar Provider ───
-    const sidebarProvider = new KodoSidebarProvider(context.extensionUri, storage);
+    const sidebarProvider = new KodoSidebarProvider(context.extensionUri, storage, firebase);
     context.subscriptions.push(
         vscode.window.registerWebviewViewProvider(KodoSidebarProvider.viewType, sidebarProvider)
     );

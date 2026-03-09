@@ -80,6 +80,7 @@ function App() {
                 <PackBrowser
                     packs={state.availablePacks}
                     installedPacks={state.data.packs || []}
+                    folders={state.data.folders || []}
                     onClose={() => state.setShowPackBrowser(false)}
                 />
             )}

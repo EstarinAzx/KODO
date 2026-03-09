@@ -429,4 +429,108 @@ body {
     border-color: color-mix(in srgb, hsl(0, 60%, 50%) 30%, transparent);
     color: hsl(0, 70%, 70%);
   }
+
+  /* ── Star rating ── */
+  .kodo-star {
+    font-size: 14px;
+    color: var(--vscode-descriptionForeground);
+    opacity: 0.3;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+
+  .kodo-star.filled {
+    color: hsl(45, 90%, 55%);
+    opacity: 1;
+  }
+
+  .kodo-star.interactive {
+    cursor: pointer;
+  }
+
+  .kodo-star.interactive:hover {
+    transform: scale(1.2);
+    color: hsl(45, 90%, 60%);
+    opacity: 1;
+  }
+
+  /* ── Registry card ── */
+  .kodo-registry-card {
+    @apply rounded-xl p-4 transition-all duration-200;
+    background: var(--vscode-editor-background);
+    border: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 10%, transparent);
+  }
+
+  .kodo-registry-card:hover {
+    border-color: color-mix(in srgb, var(--vscode-panel-border, #666) 25%, transparent);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  /* ── Tab buttons ── */
+  .kodo-tab {
+    @apply px-4 py-2 text-xs font-semibold cursor-pointer transition-all duration-200;
+    background: transparent;
+    color: var(--vscode-descriptionForeground);
+    border: none;
+    border-bottom: 2px solid transparent;
+    opacity: 0.6;
+  }
+
+  .kodo-tab:hover {
+    opacity: 0.9;
+  }
+
+  .kodo-tab.active {
+    color: var(--vscode-editor-foreground);
+    border-bottom-color: var(--vscode-focusBorder);
+    opacity: 1;
+  }
+
+  /* ── Skeleton loader ── */
+  .kodo-skeleton {
+    background: linear-gradient(90deg,
+        color-mix(in srgb, var(--vscode-editor-background) 95%, var(--vscode-editor-foreground)),
+        color-mix(in srgb, var(--vscode-editor-background) 85%, var(--vscode-editor-foreground)),
+        color-mix(in srgb, var(--vscode-editor-background) 95%, var(--vscode-editor-foreground)));
+    background-size: 200% 100%;
+    animation: kodo-shimmer 1.5s ease-in-out infinite;
+    border-radius: 12px;
+  }
+
+  @keyframes kodo-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* ── GitHub auth button ── */
+  .kodo-auth-btn {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 cursor-pointer;
+    background: hsl(0, 0%, 14%);
+    color: hsl(0, 0%, 90%);
+    border: 1px solid hsl(0, 0%, 22%);
+  }
+
+  .kodo-auth-btn:hover {
+    background: hsl(0, 0%, 18%);
+    border-color: hsl(0, 0%, 30%);
+  }
+
+  /* ── Downloads badge ── */
+  .kodo-badge.downloads {
+    background: color-mix(in srgb, var(--vscode-descriptionForeground) 10%, transparent);
+    color: var(--vscode-descriptionForeground);
+    font-size: 10px;
+    @apply rounded-full px-2 py-0.5;
+  }
+
+  /* ── Pending badge ── */
+  .kodo-badge.pending {
+    background: color-mix(in srgb, hsl(40, 80%, 50%) 18%, transparent);
+    color: hsl(40, 80%, 65%);
+  }
 }

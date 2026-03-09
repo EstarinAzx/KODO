@@ -64,6 +64,36 @@ export interface KodoData {
     packs: TemplatePack[];
 }
 
+// ─── Registry Types ───
+
+export interface RegistryPack {
+    id: string;
+    name: string;
+    description: string;
+    author: string;
+    authorId: string;
+    language: string;
+    icon: string;
+    version: string;
+    snippetCount: number;
+    downloads: number;
+    rating: number;
+    ratingCount: number;
+    tags: string[];
+    fileUrl: string;
+    status: 'pending' | 'approved' | 'rejected';
+    createdAt: number;
+    updatedAt: number;
+}
+
+export interface RegistryUser {
+    id: string;
+    githubUsername: string;
+    displayName: string;
+    avatarUrl: string;
+    publishedPackCount: number;
+}
+
 // ─── Message Types (Webview ↔ Extension Host) ───
 
 export type MessageToWebview =
@@ -71,7 +101,10 @@ export type MessageToWebview =
     | { type: 'update'; data: KodoData }
     | { type: 'snippetInserted'; snippetId: string }
     | { type: 'importResult'; success: boolean; count: number }
-    | { type: 'packsUpdate'; packs: TemplatePack[]; availablePacks: PackManifest[] };
+    | { type: 'packsUpdate'; packs: TemplatePack[]; availablePacks: PackManifest[] }
+    | { type: 'registryPacks'; packs: RegistryPack[]; hasMore: boolean }
+    | { type: 'registryAuthState'; user: RegistryUser | null }
+    | { type: 'registryPublishResult'; success: boolean; message: string };
 
 export type MessageFromWebview =
     | { type: 'ready' }
@@ -91,7 +124,13 @@ export type MessageFromWebview =
     | { type: 'installPack'; packId: string }
     | { type: 'uninstallPack'; packId: string }
     | { type: 'importPack' }
-    | { type: 'getAvailablePacks' };
+    | { type: 'getAvailablePacks' }
+    | { type: 'registryFetchPacks'; page: number; sortBy: string; language?: string; search?: string }
+    | { type: 'registryInstallPack'; packId: string; fileUrl: string }
+    | { type: 'registryRatePack'; packId: string; stars: number }
+    | { type: 'registryPublishPack'; folderId: string; name: string; description: string; icon: string; language: string; version: string }
+    | { type: 'registrySignIn' }
+    | { type: 'registrySignOut' };
 
 // ─── Utility ───
 

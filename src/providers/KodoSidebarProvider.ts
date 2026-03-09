@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { StorageService } from '../services/StorageService';
 import { PackService } from '../services/PackService';
+import { FirebaseService } from '../services/FirebaseService';
 import { MessageFromWebview } from '../models/types';
 
 export class KodoSidebarProvider implements vscode.WebviewViewProvider {
@@ -10,7 +11,15 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
     constructor(
         private readonly _extensionUri: vscode.Uri,
         private readonly _storage: StorageService,
-    ) { }
+        private readonly _firebase: FirebaseService,
+    ) {
+        // Try to restore Firebase session
+        this._firebase.restoreSession().then(user => {
+            if (user) {
+                this._view?.webview.postMessage({ type: 'registryAuthState', user });
+            }
+        });
+    }
 
     public resolveWebviewView(
         webviewView: vscode.WebviewView,
@@ -193,6 +202,124 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
 
                 case 'getAvailablePacks': {
                     await this.sendPacksToWebview();
+                    break;
+                }
+
+                // ─── Registry Handlers ───
+
+                case 'registryFetchPacks': {
+                    try {
+                        const result = await this._firebase.fetchPacks({
+                            page: message.page,
+                            sortBy: message.sortBy,
+                            language: message.language,
+                            search: message.search,
+                        });
+                        this._view?.webview.postMessage({
+                            type: 'registryPacks',
+                            packs: result.packs,
+                            hasMore: result.hasMore,
+                        });
+                    } catch {
+                        this._view?.webview.postMessage({
+                            type: 'registryPacks',
+                            packs: [],
+                            hasMore: false,
+                        });
+                    }
+                    break;
+                }
+
+                case 'registryInstallPack': {
+                    const manifest = await this._firebase.downloadPackFile(message.fileUrl);
+                    if (manifest) {
+                        await this._storage.installPack(manifest);
+                        await this._firebase.incrementDownloadCount(message.packId);
+                        this.sendDataToWebview();
+                        await this.sendPacksToWebview();
+                        vscode.window.showInformationMessage(
+                            `Installed "${manifest.name}" from registry (${manifest.snippets.length} snippets)`,
+                        );
+                    } else {
+                        vscode.window.showErrorMessage('Failed to download pack from registry.');
+                    }
+                    break;
+                }
+
+                case 'registryRatePack': {
+                    await this._firebase.ratePack(message.packId, message.stars);
+                    break;
+                }
+
+                case 'registryPublishPack': {
+                    const data = this._storage.getData();
+                    const folder = data.folders.find(f => f.id === message.folderId);
+                    if (!folder) {
+                        this._view?.webview.postMessage({
+                            type: 'registryPublishResult',
+                            success: false,
+                            message: 'Folder not found',
+                        });
+                        break;
+                    }
+
+                    // Build a PackManifest from the folder
+                    const folderSnippets = data.snippets.filter(s => s.folderId === message.folderId);
+                    const usedTagIds = new Set(folderSnippets.flatMap(s => s.tags));
+                    const folderTags = data.tags.filter(t => usedTagIds.has(t.id));
+
+                    const packManifest = {
+                        id: message.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+                        name: message.name,
+                        description: message.description,
+                        author: this._firebase.getCurrentUser()?.githubUsername || 'anonymous',
+                        version: message.version,
+                        language: message.language,
+                        icon: message.icon,
+                        snippets: folderSnippets.map(s => ({
+                            id: s.id,
+                            name: s.name,
+                            code: s.code,
+                            language: s.language,
+                            folderId: 'root',
+                            tags: s.tags,
+                            description: s.description,
+                        })),
+                        folders: [{ id: 'root', name: message.name, parentId: null, sortOrder: 0 }],
+                        tags: folderTags.map(t => ({ id: t.id, name: t.name, color: t.color })),
+                    };
+
+                    const user = this._firebase.getCurrentUser();
+                    const result = await this._firebase.publishPack(packManifest as any, {
+                        authorId: user?.id || '',
+                        author: user?.githubUsername || 'anonymous',
+                        icon: message.icon,
+                        language: message.language,
+                    });
+
+                    this._view?.webview.postMessage({
+                        type: 'registryPublishResult',
+                        success: result.success,
+                        message: result.message,
+                    });
+                    break;
+                }
+
+                case 'registrySignIn': {
+                    const user = await this._firebase.signInWithGitHub();
+                    this._view?.webview.postMessage({
+                        type: 'registryAuthState',
+                        user,
+                    });
+                    break;
+                }
+
+                case 'registrySignOut': {
+                    await this._firebase.signOut();
+                    this._view?.webview.postMessage({
+                        type: 'registryAuthState',
+                        user: null,
+                    });
                     break;
                 }
             }

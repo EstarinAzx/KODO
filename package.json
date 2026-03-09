@@ -1,8 +1,8 @@
 {
   "name": "kodo",
   "displayName": "KODO — Code Snippet Manager",
-  "description": "Save, organize, and drag-and-drop code snippets directly in your editor. Folder & tag organization, syntax-highlighted previews, template variables, template packs, and right-click Save to KODO.",
-  "version": "0.2.0",
+  "description": "Save, organize, and drag-and-drop code snippets directly in your editor. Folder & tag organization, syntax-highlighted previews, template variables, template packs, community pack registry, and right-click Save to KODO.",
+  "version": "0.3.0",
   "license": "MIT",
   "publisher": "kodo",
   "repository": {
@@ -29,6 +29,9 @@
     "drag and drop",
     "template variables",
     "template packs",
+    "community packs",
+    "pack registry",
+    "code library",
     "coding patterns",
     "code organization"
   ],
@@ -72,6 +75,14 @@
       {
         "command": "kodo.importPack",
         "title": "KODO: Import Template Pack"
+      },
+      {
+        "command": "kodo.publishPack",
+        "title": "KODO: Publish Folder as Pack"
+      },
+      {
+        "command": "kodo.registrySignIn",
+        "title": "KODO: Sign in to Pack Registry"
       }
     ],
     "menus": {
@@ -102,6 +113,7 @@
     "concurrently": "^8.2.2",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^6.9.1",
+    "dotenv": "^17.3.1",
     "mini-css-extract-plugin": "^2.7.7",
     "postcss": "^8.4.33",
     "postcss-loader": "^8.0.0",
@@ -112,6 +124,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "firebase": "^12.10.0",
     "preact": "^10.19.3"
   }
 }

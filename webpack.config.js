@@ -2,8 +2,11 @@
 'use strict';
 
 const path = require('path');
+const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 
+// Load .env file for Firebase config (if exists)
+try { require('dotenv').config(); } catch (e) { /* dotenv not available in CI */ }
 /** @type {import('webpack').Configuration[]} */
 const configs = [
     // Extension Host (Node)
@@ -73,6 +76,14 @@ const configs = [
                 patterns: [
                     { from: 'src/webview/index.html', to: 'index.html' },
                 ],
+            }),
+            new webpack.DefinePlugin({
+                'KODO_FIREBASE_API_KEY': JSON.stringify(process.env.KODO_FIREBASE_API_KEY || ''),
+                'KODO_FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.KODO_FIREBASE_AUTH_DOMAIN || ''),
+                'KODO_FIREBASE_PROJECT_ID': JSON.stringify(process.env.KODO_FIREBASE_PROJECT_ID || ''),
+                'KODO_FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.KODO_FIREBASE_STORAGE_BUCKET || ''),
+                'KODO_FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.KODO_FIREBASE_MESSAGING_SENDER_ID || ''),
+                'KODO_FIREBASE_APP_ID': JSON.stringify(process.env.KODO_FIREBASE_APP_ID || ''),
             }),
         ],
         devtool: 'nosources-source-map',
