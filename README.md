@@ -1,15 +1,15 @@
-# KODO — Code Snippet Manager
+# KODO: Code Snippet Manager
 
 > Save, organize, and instantly reuse code snippets right from your editor sidebar.
 
 ## ✨ Features
 
-### 📁 Folder Organization
+### Folder Organization
 Create nested folders to keep your snippets organized by project, language, or category.
 
 ![Folder organization](media/folder_manager.png)
 
-### 🏷️ Tag System
+### Tag System
 Add color-coded tags for cross-cutting categorization. Filter your snippet library by tag with one click.
 
 ![Tag system](media/tag_system.png)
@@ -17,29 +17,29 @@ Add color-coded tags for cross-cutting categorization. Filter your snippet libra
 ### 🔍 Instant Search
 Search across snippet names, code content, descriptions, and languages — results update as you type.
 
-### ✨ Syntax Highlighting
+### Syntax Highlighting
 Code previews with language-aware syntax highlighting that adapts to your IDE theme.
 
-### 🎯 Drag & Drop
+### Drag & Drop
 Drag snippets directly from the sidebar into your editor. Rearrange snippet order by dragging.
 
 ![Drag and drop snippets into your editor](media/drag-and-drop.gif)
 
-### 📋 Insert at Cursor
+### Insert at Cursor
 One-click insertion with full **template variable** support — tab through placeholders to fill them in.
 
-### 🖱️ Right-Click Save
+### Right-Click Save
 Select code in your editor → Right-click → **"Save to KODO"** — saves your selection instantly.
 
 ![Right-click save to KODO](media/right_click_save.png)
 
-### 📤 Import / Export
+### Import / Export
 Back up your entire snippet collection or share it with teammates as a `.json` file.
 
-### 🎨 Theme Aware
+### Theme Aware
 Automatically matches your IDE theme — dark, light, or high contrast. Selection highlights, syntax colors, and UI elements all adapt.
 
-### 📝 Code Editor
+### Code Editor
 Built-in code editor with:
 - Auto-indentation and smart bracket closing
 - Line numbers with scroll sync
@@ -49,7 +49,7 @@ Built-in code editor with:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 1. **Install** the `.vsix` file (Extensions panel → `⋯` → "Install from VSIX...")
 2. **Open KODO** — click the KODO icon in the activity bar (left sidebar)
@@ -59,7 +59,7 @@ Built-in code editor with:
 
 ---
 
-## 📐 Template Variables
+## Template Variables
 
 Use VS Code snippet syntax to create reusable templates with dynamic placeholders:
 
@@ -105,7 +105,7 @@ export function ${1:ComponentName}({ ${2:props} }) {
 
 ---
 
-## 📦 Import & Export
+## Import & Export
 
 ### Export
 Click the **↑** icon in the header (or Command Palette → *KODO: Export Snippets*) to save your entire collection as a `.json` file.
@@ -126,19 +126,19 @@ Click the **↓** icon in the header (or Command Palette → *KODO: Import Snipp
 
 ---
 
-## 🔧 Compatibility
+## Compatibility
 
 Works with **VS Code**, **Cursor**, and **Antigravity**.
 
 ---
 
-## 👤 Credits
+## Credits
 
 Created by **[EstarinAzx](https://github.com/EstarinAzx)**
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](LICENSE).
 
