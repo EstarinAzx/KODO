@@ -43,6 +43,14 @@ const configs = [
                     { from: 'packs', to: 'packs' },
                 ],
             }),
+            new webpack.DefinePlugin({
+                'process.env.KODO_FIREBASE_API_KEY': JSON.stringify(process.env.KODO_FIREBASE_API_KEY || ''),
+                'process.env.KODO_FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.KODO_FIREBASE_AUTH_DOMAIN || ''),
+                'process.env.KODO_FIREBASE_PROJECT_ID': JSON.stringify(process.env.KODO_FIREBASE_PROJECT_ID || ''),
+                'process.env.KODO_FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.KODO_FIREBASE_STORAGE_BUCKET || ''),
+                'process.env.KODO_FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.KODO_FIREBASE_MESSAGING_SENDER_ID || ''),
+                'process.env.KODO_FIREBASE_APP_ID': JSON.stringify(process.env.KODO_FIREBASE_APP_ID || ''),
+            }),
         ],
     },
     // Webview (Browser)

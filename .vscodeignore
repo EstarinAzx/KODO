@@ -10,3 +10,5 @@ postcss.config.js
 webpack.config.js
 tsconfig.json
 .gitignore
+.env*
+firebase/**
