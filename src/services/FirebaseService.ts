@@ -133,15 +133,34 @@ export class FirebaseService {
         if (!await this.init()) return null;
 
         try {
-            const token = await this.context.secrets.get('kodo.githubToken');
-            if (!token) return null;
+            // First try VS Code's built-in GitHub session (silent, no prompt)
+            let githubToken: string | undefined;
 
-            // Re-exchange the stored GitHub token via Cloud Function
+            try {
+                const session = await vscode.authentication.getSession('github', ['read:user'], {
+                    createIfNone: false,
+                    silent: true,
+                });
+                if (session) {
+                    githubToken = session.accessToken;
+                }
+            } catch {
+                // VS Code auth not available, try stored secret
+            }
+
+            // Fall back to stored secret
+            if (!githubToken) {
+                githubToken = await this.context.secrets.get('kodo.githubToken');
+            }
+
+            if (!githubToken) return null;
+
+            // Re-exchange the GitHub token via Cloud Function
             const { httpsCallable, getFunctions } = await import('firebase/functions');
             const functions = getFunctions(firebaseApp);
             const githubAuthFn = httpsCallable(functions, 'githubAuth');
 
-            const result: any = await githubAuthFn({ githubToken: token });
+            const result: any = await githubAuthFn({ githubToken });
             const { customToken, user: ghUser } = result.data;
 
             const { signInWithCustomToken } = await import('firebase/auth');
@@ -154,6 +173,9 @@ export class FirebaseService {
                 avatarUrl: ghUser.avatarUrl,
                 publishedPackCount: 0,
             };
+
+            // Update stored token
+            await this.context.secrets.store('kodo.githubToken', githubToken);
 
             return this.currentUser;
         } catch {

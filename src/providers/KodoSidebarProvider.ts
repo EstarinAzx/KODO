@@ -247,6 +247,8 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
                     }
 
                     if (manifest) {
+                        // Override manifest ID with registry pack ID so installed pack matches registry entry
+                        manifest.id = message.packId;
                         await this._storage.installPack(manifest);
                         await this._firebase.incrementDownloadCount(message.packId);
                         this.sendDataToWebview();
