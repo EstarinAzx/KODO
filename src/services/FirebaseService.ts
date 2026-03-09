@@ -72,7 +72,7 @@ export class FirebaseService {
             const { GithubAuthProvider, signInWithCredential } = await import('firebase/auth');
 
             // Use VS Code's built-in GitHub authentication provider
-            // This opens a proper OAuth flow in the user's browser
+            // This handles the full OAuth flow automatically — no PAT needed!
             const session = await vscode.authentication.getSession('github', ['read:user'], {
                 createIfNone: true,
             });
@@ -88,8 +88,8 @@ export class FirebaseService {
 
             this.currentUser = {
                 id: user.uid,
-                githubUsername: user.providerData[0]?.displayName || user.displayName || session.account.label || 'unknown',
-                displayName: user.displayName || session.account.label || 'Anonymous',
+                githubUsername: user.providerData[0]?.displayName || user.displayName || 'unknown',
+                displayName: user.displayName || 'Anonymous',
                 avatarUrl: user.photoURL || '',
                 publishedPackCount: 0,
             };
