@@ -1,0 +1,156 @@
+{
+    "id": "kodo.react-patterns",
+    "name": "React Patterns",
+    "description": "Common React component patterns and hooks",
+    "author": "KODO Team",
+    "version": "1.0.0",
+    "language": "typescriptreact",
+    "icon": "⚛️",
+    "snippets": [
+        {
+            "id": "functional-component",
+            "name": "Functional Component",
+            "code": "import React from 'react';\n\ninterface ${1:Component}Props {\n    ${2:title}: string;\n}\n\nexport function ${1:Component}({ ${2:title} }: ${1:Component}Props) {\n    return (\n        <div className=\"${3:container}\">\n            <h1>{${2:title}}</h1>\n            ${4:// content}\n        </div>\n    );\n}",
+            "language": "typescriptreact",
+            "folderId": "root",
+            "tags": [
+                "react",
+                "components"
+            ],
+            "description": "React functional component with TypeScript props"
+        },
+        {
+            "id": "usestate-hook",
+            "name": "useState Hook",
+            "code": "const [${1:value}, set${2:Value}] = useState<${3:string}>(${4:initialValue});",
+            "language": "typescriptreact",
+            "folderId": "root",
+            "tags": [
+                "react",
+                "hooks"
+            ],
+            "description": "useState hook with TypeScript generic"
+        },
+        {
+            "id": "useeffect-hook",
+            "name": "useEffect Hook",
+            "code": "useEffect(() => {\n    ${1:// effect logic}\n    const ${2:subscription} = ${3:subscribe}();\n\n    return () => {\n        ${2:subscription}.unsubscribe();\n        ${4:// cleanup}\n    };\n}, [${5:dependencies}]);",
+            "language": "typescriptreact",
+            "folderId": "root",
+            "tags": [
+                "react",
+                "hooks"
+            ],
+            "description": "useEffect with cleanup and dependencies"
+        },
+        {
+            "id": "usecontext-hook",
+            "name": "useContext Setup",
+            "code": "import { createContext, useContext, useState, ReactNode } from 'react';\n\ninterface ${1:Theme}ContextType {\n    ${2:value}: ${3:string};\n    set${4:Value}: (v: ${3:string}) => void;\n}\n\nconst ${1:Theme}Context = createContext<${1:Theme}ContextType | undefined>(undefined);\n\nexport function ${1:Theme}Provider({ children }: { children: ReactNode }) {\n    const [${2:value}, set${4:Value}] = useState<${3:string}>(${5:defaultValue});\n\n    return (\n        <${1:Theme}Context.Provider value={{ ${2:value}, set${4:Value} }}>\n            {children}\n        </${1:Theme}Context.Provider>\n    );\n}\n\nexport function use${1:Theme}() {\n    const context = useContext(${1:Theme}Context);\n    if (!context) throw new Error('use${1:Theme} must be used within ${1:Theme}Provider');\n    return context;\n}",
+            "language": "typescriptreact",
+            "folderId": "root",
+            "tags": [
+                "react",
+                "hooks"
+            ],
+            "description": "Full Context setup with Provider and custom hook"
+        },
+        {
+            "id": "custom-hook",
+            "name": "Custom Hook",
+            "code": "import { useState, useEffect } from 'react';\n\nexport function use${1:CustomHook}(${2:param}: ${3:string}) {\n    const [${4:data}, set${5:Data}] = useState<${6:any}>(null);\n    const [loading, setLoading] = useState(true);\n    const [error, setError] = useState<Error | null>(null);\n\n    useEffect(() => {\n        const fetchData = async () => {\n            try {\n                setLoading(true);\n                const result = await ${7:fetchFunction}(${2:param});\n                set${5:Data}(result);\n            } catch (err) {\n                setError(err as Error);\n            } finally {\n                setLoading(false);\n            }\n        };\n        fetchData();\n    }, [${2:param}]);\n\n    return { ${4:data}, loading, error };\n}",
+            "language": "typescriptreact",
+            "folderId": "root",
+            "tags": [
+                "react",
+                "hooks"
+            ],
+            "description": "Custom hook with loading/error states"
+        },
+        {
+            "id": "error-boundary",
+            "name": "Error Boundary",
+            "code": "import React, { Component, ErrorInfo, ReactNode } from 'react';\n\ninterface Props {\n    children: ReactNode;\n    fallback?: ReactNode;\n}\n\ninterface State {\n    hasError: boolean;\n    error: Error | null;\n}\n\nexport class ${1:ErrorBoundary} extends Component<Props, State> {\n    state: State = { hasError: false, error: null };\n\n    static getDerivedStateFromError(error: Error): State {\n        return { hasError: true, error };\n    }\n\n    componentDidCatch(error: Error, info: ErrorInfo) {\n        console.error('${1:ErrorBoundary} caught:', error, info);\n    }\n\n    render() {\n        if (this.state.hasError) {\n            return this.props.fallback || <div>Something went wrong.</div>;\n        }\n        return this.props.children;\n    }\n}",
+            "language": "typescriptreact",
+            "folderId": "root",
+            "tags": [
+                "react",
+                "components"
+            ],
+            "description": "Error boundary class component"
+        },
+        {
+            "id": "react-memo",
+            "name": "React.memo Component",
+            "code": "interface ${1:Component}Props {\n    ${2:data}: ${3:string};\n    on${4:Action}: () => void;\n}\n\nexport const ${1:Component} = React.memo(function ${1:Component}({ ${2:data}, on${4:Action} }: ${1:Component}Props) {\n    return (\n        <div onClick={on${4:Action}}>\n            {${2:data}}\n        </div>\n    );\n});",
+            "language": "typescriptreact",
+            "folderId": "root",
+            "tags": [
+                "react",
+                "components"
+            ],
+            "description": "Memoized component to prevent unnecessary re-renders"
+        },
+        {
+            "id": "usecallback-hook",
+            "name": "useCallback Hook",
+            "code": "const ${1:handleAction} = useCallback((${2:param}: ${3:string}) => {\n    ${4:// callback logic}\n    console.log(${2:param});\n}, [${5:dependencies}]);",
+            "language": "typescriptreact",
+            "folderId": "root",
+            "tags": [
+                "react",
+                "hooks"
+            ],
+            "description": "useCallback for memoized event handlers"
+        },
+        {
+            "id": "usereducer-hook",
+            "name": "useReducer Hook",
+            "code": "type ${1:State} = {\n    ${2:count}: number;\n    ${3:loading}: boolean;\n};\n\ntype ${4:Action} =\n    | { type: 'INCREMENT' }\n    | { type: 'DECREMENT' }\n    | { type: 'SET_LOADING'; payload: boolean };\n\nfunction ${5:reducer}(state: ${1:State}, action: ${4:Action}): ${1:State} {\n    switch (action.type) {\n        case 'INCREMENT':\n            return { ...state, ${2:count}: state.${2:count} + 1 };\n        case 'DECREMENT':\n            return { ...state, ${2:count}: state.${2:count} - 1 };\n        case 'SET_LOADING':\n            return { ...state, ${3:loading}: action.payload };\n        default:\n            return state;\n    }\n}\n\nconst [state, dispatch] = useReducer(${5:reducer}, { ${2:count}: 0, ${3:loading}: false });",
+            "language": "typescriptreact",
+            "folderId": "root",
+            "tags": [
+                "react",
+                "hooks"
+            ],
+            "description": "useReducer with typed actions and state"
+        },
+        {
+            "id": "context-provider",
+            "name": "Context Provider Pattern",
+            "code": "import { createContext, useContext, useState, ReactNode } from 'react';\n\nconst ${1:App}Context = createContext<{\n    ${2:user}: ${3:string} | null;\n    ${4:setUser}: (u: ${3:string} | null) => void;\n} | null>(null);\n\nexport function ${1:App}Provider({ children }: { children: ReactNode }) {\n    const [${2:user}, ${4:setUser}] = useState<${3:string} | null>(null);\n    return (\n        <${1:App}Context.Provider value={{ ${2:user}, ${4:setUser} }}>\n            {children}\n        </${1:App}Context.Provider>\n    );\n}\n\nexport const use${1:App} = () => {\n    const ctx = useContext(${1:App}Context);\n    if (!ctx) throw new Error('use${1:App} must be inside ${1:App}Provider');\n    return ctx;\n};",
+            "language": "typescriptreact",
+            "folderId": "root",
+            "tags": [
+                "react",
+                "hooks"
+            ],
+            "description": "Reusable context provider with custom hook"
+        }
+    ],
+    "folders": [
+        {
+            "id": "root",
+            "name": "React Patterns",
+            "parentId": null,
+            "sortOrder": 0
+        }
+    ],
+    "tags": [
+        {
+            "id": "react",
+            "name": "react",
+            "color": "hsl(195, 70%, 60%)"
+        },
+        {
+            "id": "hooks",
+            "name": "hooks",
+            "color": "hsl(270, 70%, 60%)"
+        },
+        {
+            "id": "components",
+            "name": "components",
+            "color": "hsl(330, 70%, 60%)"
+        }
+    ]
+}

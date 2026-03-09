@@ -1,0 +1,156 @@
+{
+    "id": "kodo.rest-api",
+    "name": "REST API",
+    "description": "Express.js REST API endpoints and middleware patterns",
+    "author": "KODO Team",
+    "version": "1.0.0",
+    "language": "javascript",
+    "icon": "🚀",
+    "snippets": [
+        {
+            "id": "get-endpoint",
+            "name": "GET Endpoint",
+            "code": "app.get('/api/${1:resource}', async (req, res) => {\n    try {\n        const ${2:items} = await ${3:Model}.find();\n        res.json(${2:items});\n    } catch (error) {\n        res.status(500).json({ error: error.message });\n    }\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "api",
+                "express"
+            ],
+            "description": "GET endpoint to list all resources"
+        },
+        {
+            "id": "get-by-id",
+            "name": "GET by ID",
+            "code": "app.get('/api/${1:resource}/:${2:id}', async (req, res) => {\n    try {\n        const { ${2:id} } = req.params;\n        const ${3:item} = await ${4:Model}.findById(${2:id});\n        if (!${3:item}) {\n            return res.status(404).json({ error: '${1:resource} not found' });\n        }\n        res.json(${3:item});\n    } catch (error) {\n        res.status(500).json({ error: error.message });\n    }\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "api",
+                "express"
+            ],
+            "description": "GET endpoint to fetch a single resource by ID"
+        },
+        {
+            "id": "post-endpoint",
+            "name": "POST Endpoint",
+            "code": "app.post('/api/${1:resource}', async (req, res) => {\n    try {\n        const ${2:item} = new ${3:Model}(req.body);\n        const saved = await ${2:item}.save();\n        res.status(201).json(saved);\n    } catch (error) {\n        res.status(400).json({ error: error.message });\n    }\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "api",
+                "express"
+            ],
+            "description": "POST endpoint to create a new resource"
+        },
+        {
+            "id": "put-endpoint",
+            "name": "PUT Endpoint",
+            "code": "app.put('/api/${1:resource}/:${2:id}', async (req, res) => {\n    try {\n        const { ${2:id} } = req.params;\n        const ${3:updated} = await ${4:Model}.findByIdAndUpdate(${2:id}, req.body, { new: true });\n        if (!${3:updated}) {\n            return res.status(404).json({ error: '${1:resource} not found' });\n        }\n        res.json(${3:updated});\n    } catch (error) {\n        res.status(400).json({ error: error.message });\n    }\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "api",
+                "express"
+            ],
+            "description": "PUT endpoint to update a resource"
+        },
+        {
+            "id": "delete-endpoint",
+            "name": "DELETE Endpoint",
+            "code": "app.delete('/api/${1:resource}/:${2:id}', async (req, res) => {\n    try {\n        const { ${2:id} } = req.params;\n        const ${3:deleted} = await ${4:Model}.findByIdAndDelete(${2:id});\n        if (!${3:deleted}) {\n            return res.status(404).json({ error: '${1:resource} not found' });\n        }\n        res.json({ message: '${1:resource} deleted successfully' });\n    } catch (error) {\n        res.status(500).json({ error: error.message });\n    }\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "api",
+                "express"
+            ],
+            "description": "DELETE endpoint to remove a resource"
+        },
+        {
+            "id": "middleware",
+            "name": "Custom Middleware",
+            "code": "function ${1:middlewareName}(req, res, next) {\n    ${2:// middleware logic}\n    console.log(`[${1:middlewareName}] ${req.method} ${req.url}`);\n    next();\n}",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "api",
+                "express"
+            ],
+            "description": "Express middleware function"
+        },
+        {
+            "id": "error-handler",
+            "name": "Error Handler Middleware",
+            "code": "function ${1:errorHandler}(err, req, res, next) {\n    console.error('${1:errorHandler}:', err.stack);\n    const statusCode = err.statusCode || 500;\n    res.status(statusCode).json({\n        error: err.message,\n        ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),\n    });\n}",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "api",
+                "express"
+            ],
+            "description": "Express global error handler middleware"
+        },
+        {
+            "id": "auth-middleware",
+            "name": "Auth Middleware",
+            "code": "async function ${1:authenticate}(req, res, next) {\n    try {\n        const token = req.headers.authorization?.split(' ')[1];\n        if (!token) {\n            return res.status(401).json({ error: 'No token provided' });\n        }\n        const ${2:decoded} = await ${3:verifyToken}(token);\n        req.${4:user} = ${2:decoded};\n        next();\n    } catch (error) {\n        res.status(401).json({ error: 'Invalid token' });\n    }\n}",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "api",
+                "backend"
+            ],
+            "description": "JWT authentication middleware"
+        },
+        {
+            "id": "validation-middleware",
+            "name": "Validation Middleware",
+            "code": "function ${1:validate}(${2:schema}) {\n    return (req, res, next) => {\n        const { error } = ${2:schema}.validate(req.body);\n        if (error) {\n            return res.status(400).json({\n                error: 'Validation failed',\n                details: error.details.map(d => d.message),\n            });\n        }\n        next();\n    };\n}",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "api",
+                "backend"
+            ],
+            "description": "Request body validation middleware"
+        },
+        {
+            "id": "router-setup",
+            "name": "Router Setup",
+            "code": "const express = require('express');\nconst router = express.Router();\n\nrouter.get('/', ${1:controller}.getAll);\nrouter.get('/:id', ${1:controller}.getById);\nrouter.post('/', ${1:controller}.create);\nrouter.put('/:id', ${1:controller}.update);\nrouter.delete('/:id', ${1:controller}.delete);\n\nmodule.exports = router;",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "api",
+                "express"
+            ],
+            "description": "Express router with full CRUD routes"
+        }
+    ],
+    "folders": [
+        {
+            "id": "root",
+            "name": "REST API",
+            "parentId": null,
+            "sortOrder": 0
+        }
+    ],
+    "tags": [
+        {
+            "id": "api",
+            "name": "api",
+            "color": "hsl(210, 70%, 60%)"
+        },
+        {
+            "id": "express",
+            "name": "express",
+            "color": "hsl(120, 70%, 60%)"
+        },
+        {
+            "id": "backend",
+            "name": "backend",
+            "color": "hsl(30, 70%, 60%)"
+        }
+    ]
+}

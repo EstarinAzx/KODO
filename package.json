@@ -1,8 +1,8 @@
 {
   "name": "kodo",
   "displayName": "KODO — Code Snippet Manager",
-  "description": "Save, organize, and drag-and-drop code snippets directly in your editor. Folder & tag organization, syntax-highlighted previews, template variables, and right-click Save to KODO.",
-  "version": "0.1.0",
+  "description": "Save, organize, and drag-and-drop code snippets directly in your editor. Folder & tag organization, syntax-highlighted previews, template variables, template packs, and right-click Save to KODO.",
+  "version": "0.2.0",
   "license": "MIT",
   "publisher": "kodo",
   "repository": {
@@ -28,6 +28,8 @@
     "code manager",
     "drag and drop",
     "template variables",
+    "template packs",
+    "coding patterns",
     "code organization"
   ],
   "main": "./dist/extension.js",
@@ -66,6 +68,10 @@
       {
         "command": "kodo.importSnippets",
         "title": "KODO: Import Snippets"
+      },
+      {
+        "command": "kodo.importPack",
+        "title": "KODO: Import Template Pack"
       }
     ],
     "menus": {

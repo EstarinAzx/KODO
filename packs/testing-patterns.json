@@ -1,0 +1,156 @@
+{
+    "id": "kodo.testing-patterns",
+    "name": "Testing Patterns",
+    "description": "Unit testing patterns for Jest and Mocha",
+    "author": "KODO Team",
+    "version": "1.0.0",
+    "language": "javascript",
+    "icon": "🧪",
+    "snippets": [
+        {
+            "id": "test-suite",
+            "name": "Test Suite",
+            "code": "describe('${1:ModuleName}', () => {\n    beforeEach(() => {\n        ${2:// setup}\n    });\n\n    afterEach(() => {\n        ${3:// teardown}\n    });\n\n    it('should ${4:do something}', () => {\n        ${5:// test}\n    });\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "testing",
+                "jest"
+            ],
+            "description": "Test suite with setup and teardown"
+        },
+        {
+            "id": "unit-test",
+            "name": "Unit Test",
+            "code": "it('should ${1:expected behavior}', () => {\n    // Arrange\n    const ${2:input} = ${3:testValue};\n\n    // Act\n    const result = ${4:functionUnderTest}(${2:input});\n\n    // Assert\n    expect(result).${5:toBe}(${6:expectedValue});\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "testing",
+                "jest"
+            ],
+            "description": "Unit test with AAA pattern (Arrange-Act-Assert)"
+        },
+        {
+            "id": "mock-function",
+            "name": "Mock Function",
+            "code": "const ${1:mockFn} = jest.fn();\n${1:mockFn}.mockReturnValue(${2:returnValue});\n\n// Or with implementation\nconst ${3:mockImpl} = jest.fn((${4:param}) => {\n    return ${5:result};\n});\n\n// Verify calls\nexpect(${1:mockFn}).toHaveBeenCalledTimes(${6:1});\nexpect(${1:mockFn}).toHaveBeenCalledWith(${7:expectedArgs});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "testing",
+                "jest"
+            ],
+            "description": "Jest mock function with assertions"
+        },
+        {
+            "id": "async-test",
+            "name": "Async Test",
+            "code": "it('should ${1:handle async operation}', async () => {\n    const ${2:result} = await ${3:asyncFunction}(${4:params});\n    expect(${2:result}).${5:toEqual}(${6:expected});\n});\n\n// With rejection\nit('should throw on ${7:error case}', async () => {\n    await expect(${8:asyncFunction}(${9:badInput})).rejects.toThrow('${10:error message}');\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "testing",
+                "jest"
+            ],
+            "description": "Async test with await and rejection testing"
+        },
+        {
+            "id": "setup-teardown",
+            "name": "Setup / Teardown",
+            "code": "beforeAll(async () => {\n    ${1:// one-time setup (e.g., DB connection)}\n});\n\nafterAll(async () => {\n    ${2:// one-time teardown (e.g., close DB)}\n});\n\nbeforeEach(() => {\n    ${3:// runs before each test}\n});\n\nafterEach(() => {\n    jest.restoreAllMocks();\n    ${4:// runs after each test}\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "testing",
+                "jest"
+            ],
+            "description": "Full lifecycle hooks for test suites"
+        },
+        {
+            "id": "spy",
+            "name": "Spy on Method",
+            "code": "const ${1:spy} = jest.spyOn(${2:object}, '${3:method}');\n${1:spy}.mockImplementation((${4:args}) => ${5:mockReturn});\n\n// Run code that calls the method\n${6:object.method(args)};\n\n// Assertions\nexpect(${1:spy}).toHaveBeenCalled();\nexpect(${1:spy}).toHaveBeenCalledWith(${7:expectedArgs});\n\n// Restore\n${1:spy}.mockRestore();",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "testing",
+                "jest"
+            ],
+            "description": "Jest spy on object method"
+        },
+        {
+            "id": "mock-module",
+            "name": "Mock Module",
+            "code": "jest.mock('${1:module-name}', () => ({\n    ${2:exportedFunction}: jest.fn().mockReturnValue(${3:mockValue}),\n    ${4:anotherExport}: jest.fn(),\n}));\n\n// Import after mock\nconst { ${2:exportedFunction} } = require('${1:module-name}');",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "testing",
+                "jest"
+            ],
+            "description": "Mock an entire module with Jest"
+        },
+        {
+            "id": "assertion-patterns",
+            "name": "Common Assertions",
+            "code": "// Equality\nexpect(${1:value}).toBe(${2:expected});\nexpect(${1:value}).toEqual(${3:deepEqual});\n\n// Truthiness\nexpect(${4:val}).toBeTruthy();\nexpect(${5:val}).toBeFalsy();\nexpect(${6:val}).toBeNull();\nexpect(${7:val}).toBeDefined();\n\n// Numbers\nexpect(${8:num}).toBeGreaterThan(${9:min});\nexpect(${8:num}).toBeLessThanOrEqual(${10:max});\n\n// Strings\nexpect(${11:str}).toMatch(/${12:pattern}/);\nexpect(${11:str}).toContain('${13:substring}');\n\n// Arrays\nexpect(${14:arr}).toHaveLength(${15:length});\nexpect(${14:arr}).toContain(${16:item});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "testing",
+                "jest"
+            ],
+            "description": "Common Jest assertion patterns"
+        },
+        {
+            "id": "snapshot-test",
+            "name": "Snapshot Test",
+            "code": "import { render } from '@testing-library/react';\n\nit('should match snapshot', () => {\n    const { container } = render(<${1:Component} ${2:prop}=\"${3:value}\" />);\n    expect(container).toMatchSnapshot();\n});\n\n// Inline snapshot\nit('should match inline snapshot', () => {\n    expect(${4:formatOutput}(${5:input})).toMatchInlineSnapshot();\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "testing",
+                "jest"
+            ],
+            "description": "Snapshot and inline snapshot testing"
+        },
+        {
+            "id": "integration-test",
+            "name": "API Integration Test",
+            "code": "const request = require('supertest');\nconst app = require('${1:../app}');\n\ndescribe('${2:API Endpoint}', () => {\n    it('GET /api/${3:resource} returns list', async () => {\n        const res = await request(app)\n            .get('/api/${3:resource}')\n            .expect('Content-Type', /json/)\n            .expect(200);\n\n        expect(res.body).toBeInstanceOf(Array);\n    });\n\n    it('POST /api/${3:resource} creates item', async () => {\n        const res = await request(app)\n            .post('/api/${3:resource}')\n            .send({ ${4:name}: '${5:Test}' })\n            .expect(201);\n\n        expect(res.body.${4:name}).toBe('${5:Test}');\n    });\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": [
+                "testing",
+                "mocha"
+            ],
+            "description": "API integration test with supertest"
+        }
+    ],
+    "folders": [
+        {
+            "id": "root",
+            "name": "Testing",
+            "parentId": null,
+            "sortOrder": 0
+        }
+    ],
+    "tags": [
+        {
+            "id": "testing",
+            "name": "testing",
+            "color": "hsl(140, 70%, 60%)"
+        },
+        {
+            "id": "jest",
+            "name": "jest",
+            "color": "hsl(15, 70%, 60%)"
+        },
+        {
+            "id": "mocha",
+            "name": "mocha",
+            "color": "hsl(35, 70%, 60%)"
+        }
+    ]
+}

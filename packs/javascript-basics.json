@@ -1,0 +1,108 @@
+{
+    "id": "kodo.javascript-basics",
+    "name": "JavaScript Basics",
+    "description": "Essential JavaScript patterns and utilities",
+    "author": "KODO Team",
+    "version": "1.0.0",
+    "language": "javascript",
+    "icon": "⚡",
+    "snippets": [
+        {
+            "id": "function-template",
+            "name": "Function Template",
+            "code": "function ${1:functionName}(${2:params}) {\n    ${3:// body}\n    return ${4:result};\n}",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": ["javascript", "basics"],
+            "description": "Basic function declaration with parameters and return"
+        },
+        {
+            "id": "arrow-function",
+            "name": "Arrow Function",
+            "code": "const ${1:functionName} = (${2:params}) => {\n    ${3:// body}\n    return ${4:result};\n};",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": ["javascript", "basics"],
+            "description": "Arrow function expression"
+        },
+        {
+            "id": "for-loop",
+            "name": "For Loop",
+            "code": "for (let ${1:i} = 0; ${1:i} < ${2:array}.length; ${1:i}++) {\n    const ${3:item} = ${2:array}[${1:i}];\n    ${4:// body}\n}",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": ["javascript", "basics"],
+            "description": "Classic for loop with index"
+        },
+        {
+            "id": "foreach",
+            "name": "ForEach",
+            "code": "${1:array}.forEach((${2:item}, ${3:index}) => {\n    ${4:// body}\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": ["javascript", "basics"],
+            "description": "Array forEach iteration"
+        },
+        {
+            "id": "map-filter-reduce",
+            "name": "Map / Filter / Reduce",
+            "code": "const ${1:mapped} = ${2:array}.map((${3:item}) => ${4:item.value});\n\nconst ${5:filtered} = ${2:array}.filter((${3:item}) => ${6:item.active});\n\nconst ${7:total} = ${2:array}.reduce((${8:acc}, ${3:item}) => ${8:acc} + ${9:item.value}, ${10:0});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": ["javascript", "basics"],
+            "description": "Map, filter, and reduce array methods"
+        },
+        {
+            "id": "try-catch",
+            "name": "Try / Catch",
+            "code": "try {\n    ${1:// code that might throw}\n} catch (${2:error}) {\n    console.error('${3:Error message}:', ${2:error});\n} finally {\n    ${4:// cleanup}\n}",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": ["javascript", "basics"],
+            "description": "Try-catch-finally error handling"
+        },
+        {
+            "id": "async-await",
+            "name": "Async / Await",
+            "code": "async function ${1:functionName}(${2:params}) {\n    try {\n        const ${3:result} = await ${4:asyncOperation}(${2:params});\n        return ${3:result};\n    } catch (error) {\n        console.error('${1:functionName} failed:', error);\n        throw error;\n    }\n}",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": ["javascript", "basics"],
+            "description": "Async function with await and error handling"
+        },
+        {
+            "id": "promise",
+            "name": "Promise",
+            "code": "const ${1:promise} = new Promise((resolve, reject) => {\n    ${2:// async operation}\n    if (${3:success}) {\n        resolve(${4:result});\n    } else {\n        reject(new Error('${5:error message}'));\n    }\n});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": ["javascript", "basics"],
+            "description": "Promise constructor with resolve/reject"
+        },
+        {
+            "id": "destructuring",
+            "name": "Destructuring",
+            "code": "// Object destructuring\nconst { ${1:prop1}, ${2:prop2}, ...${3:rest} } = ${4:object};\n\n// Array destructuring\nconst [${5:first}, ${6:second}, ...${7:remaining}] = ${8:array};\n\n// Function parameter destructuring\nfunction ${9:process}({ ${10:name}, ${11:value} }) {\n    return `${${10:name}}: ${${11:value}}`;\n}",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": ["javascript", "basics"],
+            "description": "Object and array destructuring patterns"
+        },
+        {
+            "id": "spread-operator",
+            "name": "Spread Operator",
+            "code": "// Merge objects\nconst ${1:merged} = { ...${2:obj1}, ...${3:obj2}, ${4:extra}: ${5:value} };\n\n// Clone array\nconst ${6:clone} = [...${7:original}];\n\n// Function args\nconst ${8:args} = [${9:a}, ${10:b}, ${11:c}];\n${12:func}(...${8:args});",
+            "language": "javascript",
+            "folderId": "root",
+            "tags": ["javascript", "basics"],
+            "description": "Spread operator for objects, arrays, and function args"
+        }
+    ],
+    "folders": [
+        { "id": "root", "name": "JavaScript Basics", "parentId": null, "sortOrder": 0 }
+    ],
+    "tags": [
+        { "id": "javascript", "name": "javascript", "color": "hsl(50, 70%, 60%)" },
+        { "id": "basics", "name": "basics", "color": "hsl(210, 70%, 60%)" }
+    ]
+}

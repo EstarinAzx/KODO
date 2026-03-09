@@ -382,4 +382,51 @@ body {
     margin: 0;
     padding: 0;
   }
+
+  /* ── Pack card ── */
+  .kodo-pack-card {
+    @apply rounded-xl p-3 transition-all duration-200;
+    background: var(--vscode-editor-background);
+    border: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 10%, transparent);
+  }
+
+  .kodo-pack-card:hover {
+    border-color: color-mix(in srgb, var(--vscode-panel-border, #666) 25%, transparent);
+  }
+
+  .kodo-pack-card.compact {
+    @apply p-2;
+  }
+
+  /* ── Pack badge ── */
+  .kodo-pack-badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background: color-mix(in srgb, var(--vscode-descriptionForeground) 12%, transparent);
+    color: var(--vscode-descriptionForeground);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .kodo-pack-badge.installed {
+    background: color-mix(in srgb, hsl(140, 60%, 50%) 18%, transparent);
+    color: hsl(140, 60%, 65%);
+  }
+
+  /* ── Uninstall button ── */
+  .kodo-btn-uninstall {
+    @apply inline-flex items-center justify-center rounded-full px-3 py-1 text-xs font-medium transition-all duration-200 cursor-pointer;
+    background: transparent;
+    color: var(--vscode-descriptionForeground);
+    border: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 20%, transparent);
+    font-size: 11px;
+  }
+
+  .kodo-btn-uninstall:hover {
+    background: color-mix(in srgb, hsl(0, 60%, 50%) 12%, transparent);
+    border-color: color-mix(in srgb, hsl(0, 60%, 50%) 30%, transparent);
+    color: hsl(0, 70%, 70%);
+  }
 }

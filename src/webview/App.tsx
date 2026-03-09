@@ -5,9 +5,11 @@ import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
 import { TagFilterBar } from './components/TagFilterBar';
 import { FolderTree } from './components/FolderTree';
+import { PacksSection } from './components/PacksSection';
 import { SnippetList } from './components/SnippetList';
 import { SnippetEditor } from './components/SnippetEditor';
 import { NewFolderModal } from './components/NewFolderModal';
+import { PackBrowser } from './components/PackBrowser';
 
 function App() {
     const state = useKodoState();
@@ -46,6 +48,13 @@ function App() {
 
             <div class="kodo-divider" />
 
+            <PacksSection
+                packs={state.data.packs?.filter(p => p.installed) || []}
+                onBrowsePacks={() => state.setShowPackBrowser(true)}
+            />
+
+            <div class="kodo-divider" />
+
             <SnippetList
                 snippets={state.filteredSnippets}
                 tags={state.data.tags}
@@ -64,6 +73,14 @@ function App() {
                 <NewFolderModal
                     data={state.data}
                     onClose={() => state.setShowNewFolderModal(false)}
+                />
+            )}
+
+            {state.showPackBrowser && (
+                <PackBrowser
+                    packs={state.availablePacks}
+                    installedPacks={state.data.packs || []}
+                    onClose={() => state.setShowPackBrowser(false)}
                 />
             )}
         </div>

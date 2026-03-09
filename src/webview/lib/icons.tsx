@@ -96,3 +96,17 @@ export const UploadIcon = ({ size = 14, ...rest }: IconProps) => (
         <path d="M7.646 1.146a.5.5 0 01.708 0l3 3a.5.5 0 01-.708.708L8.5 2.707V11.5a.5.5 0 01-1 0V2.707L5.354 4.854a.5.5 0 11-.708-.708l3-3z" />
     </svg>
 );
+
+export const PackIcon = ({ size = 14, ...rest }: IconProps) => (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="currentColor" {...rest}>
+        <path d="M8.186 1.113a.5.5 0 00-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.239zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 011.114 0l7.129 2.852A.5.5 0 0116 3.5v8.662a1 1 0 01-.629.928l-7.185 2.874a.5.5 0 01-.372 0L.63 13.09a1 1 0 01-.63-.928V3.5a.5.5 0 01.314-.464L7.443.184z" />
+    </svg>
+);
+
+export const CheckCircleIcon = ({ size = 14, ...rest }: IconProps) => (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="currentColor" {...rest}>
+        <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0-1A6 6 0 108 2a6 6 0 000 12z" />
+        <path d="M10.97 4.97a.235.235 0 00-.02.022L7.477 9.417 5.384 7.323a.75.75 0 00-1.06 1.06L6.97 11.03a.75.75 0 001.079-.02l3.992-4.99a.75.75 0 00-1.071-1.05z" />
+    </svg>
+);
+

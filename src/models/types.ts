@@ -25,11 +25,43 @@ export interface Tag {
     color: string;
 }
 
+// ─── Template Packs ───
+
+export interface TemplatePack {
+    id: string;
+    name: string;
+    description: string;
+    author: string;
+    version: string;
+    language: string;
+    icon: string;
+    snippetCount: number;
+    installed: boolean;
+    builtin: boolean;
+    installedAt: number;
+}
+
+export interface PackManifest {
+    id: string;
+    name: string;
+    description: string;
+    author: string;
+    version: string;
+    language: string;
+    icon: string;
+    snippets: Omit<Snippet, 'createdAt' | 'updatedAt'>[];
+    folders: Folder[];
+    tags: Tag[];
+}
+
+// ─── Data Container ───
+
 export interface KodoData {
     version: number;
     snippets: Snippet[];
     folders: Folder[];
     tags: Tag[];
+    packs: TemplatePack[];
 }
 
 // ─── Message Types (Webview ↔ Extension Host) ───
@@ -38,7 +70,8 @@ export type MessageToWebview =
     | { type: 'init'; data: KodoData }
     | { type: 'update'; data: KodoData }
     | { type: 'snippetInserted'; snippetId: string }
-    | { type: 'importResult'; success: boolean; count: number };
+    | { type: 'importResult'; success: boolean; count: number }
+    | { type: 'packsUpdate'; packs: TemplatePack[]; availablePacks: PackManifest[] };
 
 export type MessageFromWebview =
     | { type: 'ready' }
@@ -54,7 +87,11 @@ export type MessageFromWebview =
     | { type: 'deleteTag'; tagId: string }
     | { type: 'reorderSnippets'; sourceId: string; targetId: string; position: 'above' | 'below' }
     | { type: 'exportData' }
-    | { type: 'importData' };
+    | { type: 'importData' }
+    | { type: 'installPack'; packId: string }
+    | { type: 'uninstallPack'; packId: string }
+    | { type: 'importPack' }
+    | { type: 'getAvailablePacks' };
 
 // ─── Utility ───
 

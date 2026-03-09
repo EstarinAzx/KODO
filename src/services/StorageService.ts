@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
-import { KodoData, Snippet, Folder, Tag, generateId } from '../models/types';
+import { KodoData, Snippet, Folder, Tag, TemplatePack, PackManifest, generateId } from '../models/types';
+import { PackService } from './PackService';
 
 const STORAGE_KEY = 'kodo.data';
-const DATA_VERSION = 1;
+const DATA_VERSION = 2;
 
 export class StorageService {
     private context: vscode.ExtensionContext;
@@ -18,7 +19,15 @@ export class StorageService {
         if (!raw || !raw.version) {
             return this.getDefaultData();
         }
-        // Future migration logic would go here
+        // Migration: v1 → v2 (add packs array)
+        if (raw.version === 1) {
+            (raw as any).packs = [];
+            raw.version = 2;
+        }
+        // Ensure packs array exists
+        if (!raw.packs) {
+            raw.packs = [];
+        }
         return raw;
     }
 
@@ -34,6 +43,7 @@ export class StorageService {
                 { id: 'default', name: 'General', parentId: null, sortOrder: 0 },
             ],
             tags: [],
+            packs: [],
         };
     }
 
@@ -202,5 +212,99 @@ export class StorageService {
             }
         }
         await this.setData(current);
+    }
+
+    // ─── Template Packs ───
+
+    async installPack(manifest: PackManifest): Promise<void> {
+        const data = this.getData();
+
+        // Prefix all IDs
+        const prefixed = PackService.prefixPackIds(manifest);
+        const now = Date.now();
+
+        // Add folders
+        for (const folder of prefixed.folders) {
+            if (!data.folders.find(f => f.id === folder.id)) {
+                data.folders.push(folder);
+            }
+        }
+
+        // Add tags
+        for (const tag of prefixed.tags) {
+            if (!data.tags.find(t => t.id === tag.id)) {
+                data.tags.push(tag);
+            }
+        }
+
+        // Add snippets
+        for (const snippet of prefixed.snippets) {
+            if (!data.snippets.find(s => s.id === snippet.id)) {
+                data.snippets.push({
+                    ...snippet,
+                    createdAt: now,
+                    updatedAt: now,
+                });
+            }
+        }
+
+        // Track the pack as installed
+        const existingIdx = data.packs.findIndex(p => p.id === manifest.id);
+        const packEntry: TemplatePack = {
+            id: manifest.id,
+            name: manifest.name,
+            description: manifest.description,
+            author: manifest.author,
+            version: manifest.version,
+            language: manifest.language,
+            icon: manifest.icon,
+            snippetCount: manifest.snippets.length,
+            installed: true,
+            builtin: manifest.id.startsWith('kodo.'),
+            installedAt: now,
+        };
+
+        if (existingIdx !== -1) {
+            data.packs[existingIdx] = packEntry;
+        } else {
+            data.packs.push(packEntry);
+        }
+
+        await this.setData(data);
+    }
+
+    async uninstallPack(packId: string): Promise<void> {
+        const data = this.getData();
+        const prefix = `pack:${packId}:`;
+
+        // Remove pack snippets
+        data.snippets = data.snippets.filter(s => !s.id.startsWith(prefix));
+
+        // Remove pack folders
+        data.folders = data.folders.filter(f => !f.id.startsWith(prefix));
+
+        // Remove pack tags and clean references from remaining snippets
+        const packTagIds = new Set(data.tags.filter(t => t.id.startsWith(prefix)).map(t => t.id));
+        data.tags = data.tags.filter(t => !t.id.startsWith(prefix));
+        data.snippets.forEach(s => {
+            s.tags = s.tags.filter(tagId => !packTagIds.has(tagId));
+        });
+
+        // Mark pack as uninstalled
+        const packIdx = data.packs.findIndex(p => p.id === packId);
+        if (packIdx !== -1) {
+            data.packs[packIdx].installed = false;
+            data.packs[packIdx].installedAt = 0;
+        }
+
+        await this.setData(data);
+    }
+
+    getInstalledPacks(): TemplatePack[] {
+        return this.getData().packs.filter(p => p.installed);
+    }
+
+    getAllPacks(): TemplatePack[] {
+        return this.getData().packs;
     }
 }

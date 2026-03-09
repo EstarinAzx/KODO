@@ -34,6 +34,13 @@ const configs = [
         },
         devtool: 'nosources-source-map',
         infrastructureLogging: { level: 'log' },
+        plugins: [
+            new CopyPlugin({
+                patterns: [
+                    { from: 'packs', to: 'packs' },
+                ],
+            }),
+        ],
     },
     // Webview (Browser)
     {

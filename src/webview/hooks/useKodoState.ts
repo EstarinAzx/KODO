@@ -27,11 +27,39 @@ export interface Tag {
     color: string;
 }
 
+export interface TemplatePack {
+    id: string;
+    name: string;
+    description: string;
+    author: string;
+    version: string;
+    language: string;
+    icon: string;
+    snippetCount: number;
+    installed: boolean;
+    builtin: boolean;
+    installedAt: number;
+}
+
+export interface PackManifest {
+    id: string;
+    name: string;
+    description: string;
+    author: string;
+    version: string;
+    language: string;
+    icon: string;
+    snippets: any[];
+    folders: any[];
+    tags: any[];
+}
+
 export interface KodoData {
     version: number;
     snippets: Snippet[];
     folders: Folder[];
     tags: Tag[];
+    packs: TemplatePack[];
 }
 
 export interface KodoState {
@@ -42,6 +70,8 @@ export interface KodoState {
     expandedFolders: Set<string>;
     editingSnippet: Snippet | null;
     showNewFolderModal: boolean;
+    showPackBrowser: boolean;
+    availablePacks: PackManifest[];
     filteredSnippets: Snippet[];
     setActiveFolderId: (id: string | null) => void;
     setActiveTagId: (id: string | null) => void;
@@ -49,9 +79,10 @@ export interface KodoState {
     toggleFolder: (id: string) => void;
     setEditingSnippet: (s: Snippet | null) => void;
     setShowNewFolderModal: (show: boolean) => void;
+    setShowPackBrowser: (show: boolean) => void;
 }
 
-const defaultData: KodoData = { version: 1, snippets: [], folders: [], tags: [] };
+const defaultData: KodoData = { version: 2, snippets: [], folders: [], tags: [], packs: [] };
 
 export function useKodoState(): KodoState {
     const [data, setData] = useState<KodoData>(defaultData);
@@ -61,6 +92,8 @@ export function useKodoState(): KodoState {
     const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set(['default']));
     const [editingSnippet, setEditingSnippet] = useState<Snippet | null>(null);
     const [showNewFolderModal, setShowNewFolderModal] = useState(false);
+    const [showPackBrowser, setShowPackBrowser] = useState(false);
+    const [availablePacks, setAvailablePacks] = useState<PackManifest[]>([]);
 
     // Listen for messages from extension host
     useEffect(() => {
@@ -69,9 +102,17 @@ export function useKodoState(): KodoState {
             if (msg.type === 'init' || msg.type === 'update') {
                 setData(msg.data);
             }
+            if (msg.type === 'packsUpdate') {
+                setAvailablePacks(msg.availablePacks || []);
+                // Also update pack installed status in data
+                if (msg.packs) {
+                    setData(prev => ({ ...prev, packs: msg.packs }));
+                }
+            }
         };
         window.addEventListener('message', handler);
         vscode.postMessage({ type: 'ready' });
+        vscode.postMessage({ type: 'getAvailablePacks' });
         return () => window.removeEventListener('message', handler);
     }, []);
 
@@ -114,6 +155,8 @@ export function useKodoState(): KodoState {
         expandedFolders, toggleFolder,
         editingSnippet, setEditingSnippet,
         showNewFolderModal, setShowNewFolderModal,
+        showPackBrowser, setShowPackBrowser,
+        availablePacks,
         filteredSnippets,
     };
 }

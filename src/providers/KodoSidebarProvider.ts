@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { StorageService } from '../services/StorageService';
+import { PackService } from '../services/PackService';
 import { MessageFromWebview } from '../models/types';
 
 export class KodoSidebarProvider implements vscode.WebviewViewProvider {
@@ -143,6 +144,57 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
                     }
                     break;
                 }
+
+                case 'installPack': {
+                    const manifest = await PackService.getPackManifest(this._extensionUri, message.packId);
+                    if (manifest) {
+                        await this._storage.installPack(manifest);
+                        this.sendDataToWebview();
+                        await this.sendPacksToWebview();
+                        vscode.window.showInformationMessage(`Installed "${manifest.name}" pack (${manifest.snippets.length} snippets)`);
+                    }
+                    break;
+                }
+
+                case 'uninstallPack': {
+                    await this._storage.uninstallPack(message.packId);
+                    this.sendDataToWebview();
+                    await this.sendPacksToWebview();
+                    vscode.window.showInformationMessage('Pack uninstalled successfully.');
+                    break;
+                }
+
+                case 'importPack': {
+                    const openPackUris = await vscode.window.showOpenDialog({
+                        canSelectMany: false,
+                        filters: { 'KODO Pack Files': ['json'] },
+                        title: 'Import Template Pack',
+                    });
+                    if (openPackUris && openPackUris.length > 0) {
+                        try {
+                            const fileContent = await vscode.workspace.fs.readFile(openPackUris[0]);
+                            const packData = JSON.parse(Buffer.from(fileContent).toString('utf-8'));
+                            if (!PackService.validatePack(packData)) {
+                                vscode.window.showErrorMessage('Invalid pack file format.');
+                                break;
+                            }
+                            await this._storage.installPack(packData);
+                            this.sendDataToWebview();
+                            await this.sendPacksToWebview();
+                            vscode.window.showInformationMessage(`Imported "${packData.name}" pack (${packData.snippets.length} snippets)`);
+                        } catch (err) {
+                            vscode.window.showErrorMessage(
+                                `Failed to import pack: ${err instanceof Error ? err.message : 'Unknown error'}`,
+                            );
+                        }
+                    }
+                    break;
+                }
+
+                case 'getAvailablePacks': {
+                    await this.sendPacksToWebview();
+                    break;
+                }
             }
         });
     }
@@ -151,6 +203,18 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
         if (this._view) {
             const data = this._storage.getData();
             this._view.webview.postMessage({ type: 'update', data });
+        }
+    }
+
+    public async sendPacksToWebview(): Promise<void> {
+        if (this._view) {
+            const builtinPacks = await PackService.getBuiltinPacks(this._extensionUri);
+            const installedPacks = this._storage.getAllPacks();
+            this._view.webview.postMessage({
+                type: 'packsUpdate',
+                packs: installedPacks,
+                availablePacks: builtinPacks,
+            });
         }
     }
 

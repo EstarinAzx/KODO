@@ -1,0 +1,151 @@
+{
+    "id": "kodo.python-basics",
+    "name": "Python Basics",
+    "description": "Essential Python patterns and idioms",
+    "author": "KODO Team",
+    "version": "1.0.0",
+    "language": "python",
+    "icon": "🐍",
+    "snippets": [
+        {
+            "id": "function-def",
+            "name": "Function Definition",
+            "code": "def ${1:function_name}(${2:param}: ${3:str}) -> ${4:str}:\n    \"\"\"${5:Description of function.}\"\"\"\n    ${6:result} = ${7:# implementation}\n    return ${6:result}",
+            "language": "python",
+            "folderId": "root",
+            "tags": [
+                "python",
+                "basics"
+            ],
+            "description": "Python function with type hints and docstring"
+        },
+        {
+            "id": "class-template",
+            "name": "Class Template",
+            "code": "class ${1:ClassName}:\n    \"\"\"${2:Class description.}\"\"\"\n\n    def __init__(self, ${3:name}: ${4:str}):\n        self.${3:name} = ${3:name}\n\n    def ${5:method}(self) -> ${6:str}:\n        \"\"\"${7:Method description.}\"\"\"\n        return f\"{self.${3:name}}: ${8:value}\"\n\n    def __repr__(self) -> str:\n        return f\"${1:ClassName}(${3:name}={self.${3:name}!r})\"",
+            "language": "python",
+            "folderId": "root",
+            "tags": [
+                "python",
+                "basics"
+            ],
+            "description": "Python class with init, method, and repr"
+        },
+        {
+            "id": "list-comprehension",
+            "name": "List Comprehension",
+            "code": "# Basic\n${1:result} = [${2:expr} for ${3:item} in ${4:iterable}]\n\n# With condition\n${5:filtered} = [${2:expr} for ${3:item} in ${4:iterable} if ${6:condition}]\n\n# Nested\n${7:flat} = [${8:val} for ${9:sublist} in ${10:nested} for ${8:val} in ${9:sublist}]",
+            "language": "python",
+            "folderId": "root",
+            "tags": [
+                "python",
+                "basics"
+            ],
+            "description": "List comprehension patterns"
+        },
+        {
+            "id": "dict-comprehension",
+            "name": "Dict Comprehension",
+            "code": "# Basic\n${1:result} = {${2:key}: ${3:value} for ${4:item} in ${5:iterable}}\n\n# With condition\n${6:filtered} = {${2:key}: ${3:value} for ${4:item} in ${5:iterable} if ${7:condition}}\n\n# From two lists\n${8:combined} = {k: v for k, v in zip(${9:keys}, ${10:values})}",
+            "language": "python",
+            "folderId": "root",
+            "tags": [
+                "python",
+                "basics"
+            ],
+            "description": "Dictionary comprehension patterns"
+        },
+        {
+            "id": "try-except",
+            "name": "Try / Except",
+            "code": "try:\n    ${1:result} = ${2:risky_operation()}\nexcept ${3:ValueError} as e:\n    ${4:print}(f\"${5:Error}: {e}\")\nexcept ${6:Exception} as e:\n    ${4:print}(f\"Unexpected error: {e}\")\n    raise\nelse:\n    ${7:# runs if no exception}\nfinally:\n    ${8:# always runs}",
+            "language": "python",
+            "folderId": "root",
+            "tags": [
+                "python",
+                "basics"
+            ],
+            "description": "Try-except with multiple handlers, else, and finally"
+        },
+        {
+            "id": "context-manager",
+            "name": "Context Manager",
+            "code": "from contextlib import contextmanager\n\n@contextmanager\ndef ${1:managed_resource}(${2:param}: ${3:str}):\n    \"\"\"${4:Context manager description.}\"\"\"\n    ${5:resource} = ${6:acquire(param)}\n    try:\n        yield ${5:resource}\n    finally:\n        ${7:resource.close()}",
+            "language": "python",
+            "folderId": "root",
+            "tags": [
+                "python",
+                "basics"
+            ],
+            "description": "Context manager using contextlib"
+        },
+        {
+            "id": "decorator",
+            "name": "Decorator",
+            "code": "import functools\nfrom typing import Callable, Any\n\ndef ${1:decorator_name}(func: Callable) -> Callable:\n    \"\"\"${2:Decorator description.}\"\"\"\n    @functools.wraps(func)\n    def wrapper(*args: Any, **kwargs: Any) -> Any:\n        ${3:# before}\n        result = func(*args, **kwargs)\n        ${4:# after}\n        return result\n    return wrapper\n\n@${1:decorator_name}\ndef ${5:example}():\n    pass",
+            "language": "python",
+            "folderId": "root",
+            "tags": [
+                "python",
+                "basics"
+            ],
+            "description": "Python decorator with functools.wraps"
+        },
+        {
+            "id": "generator",
+            "name": "Generator Function",
+            "code": "from typing import Generator\n\ndef ${1:generate_items}(${2:data}: list) -> Generator[${3:str}, None, None]:\n    \"\"\"${4:Generator description.}\"\"\"\n    for ${5:item} in ${2:data}:\n        if ${6:condition}:\n            yield ${7:transform(item)}\n\n# Usage\nfor ${8:result} in ${1:generate_items}(${9:input_data}):\n    print(${8:result})",
+            "language": "python",
+            "folderId": "root",
+            "tags": [
+                "python",
+                "basics"
+            ],
+            "description": "Generator function with yield"
+        },
+        {
+            "id": "async-def",
+            "name": "Async Function",
+            "code": "import asyncio\nfrom typing import Any\n\nasync def ${1:fetch_data}(${2:url}: str) -> ${3:dict}:\n    \"\"\"${4:Fetch data asynchronously.}\"\"\"\n    async with ${5:aiohttp}.ClientSession() as session:\n        async with session.get(${2:url}) as response:\n            ${6:data} = await response.json()\n            return ${6:data}\n\n# Usage\nasync def main():\n    result = await ${1:fetch_data}('${7:https://api.example.com}')\n    print(result)\n\nasyncio.run(main())",
+            "language": "python",
+            "folderId": "root",
+            "tags": [
+                "python",
+                "basics"
+            ],
+            "description": "Async function with aiohttp"
+        },
+        {
+            "id": "file-io",
+            "name": "File I/O",
+            "code": "from pathlib import Path\n\n# Read file\n${1:content} = Path('${2:file.txt}').read_text(encoding='utf-8')\n\n# Write file\nPath('${3:output.txt}').write_text(${4:data}, encoding='utf-8')\n\n# Read JSON\nimport json\nwith open('${5:data.json}', 'r') as f:\n    ${6:parsed} = json.load(f)\n\n# Write JSON\nwith open('${7:output.json}', 'w') as f:\n    json.dump(${8:data}, f, indent=2)",
+            "language": "python",
+            "folderId": "root",
+            "tags": [
+                "python",
+                "basics"
+            ],
+            "description": "File read/write operations with pathlib and JSON"
+        }
+    ],
+    "folders": [
+        {
+            "id": "root",
+            "name": "Python Basics",
+            "parentId": null,
+            "sortOrder": 0
+        }
+    ],
+    "tags": [
+        {
+            "id": "python",
+            "name": "python",
+            "color": "hsl(55, 70%, 60%)"
+        },
+        {
+            "id": "basics",
+            "name": "basics",
+            "color": "hsl(210, 70%, 60%)"
+        }
+    ]
+}
