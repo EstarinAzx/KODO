@@ -81,6 +81,7 @@ export interface RegistryPack {
     ratingCount: number;
     tags: string[];
     fileUrl: string;
+    manifest?: string;
     status: 'pending' | 'approved' | 'rejected';
     createdAt: number;
     updatedAt: number;
@@ -126,7 +127,7 @@ export type MessageFromWebview =
     | { type: 'importPack' }
     | { type: 'getAvailablePacks' }
     | { type: 'registryFetchPacks'; page: number; sortBy: string; language?: string; search?: string }
-    | { type: 'registryInstallPack'; packId: string; fileUrl: string }
+    | { type: 'registryInstallPack'; packId: string; fileUrl: string; manifest?: string }
     | { type: 'registryRatePack'; packId: string; stars: number }
     | { type: 'registryPublishPack'; folderId: string; name: string; description: string; icon: string; language: string; version: string }
     | { type: 'registrySignIn' }

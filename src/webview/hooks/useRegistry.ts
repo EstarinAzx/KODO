@@ -17,6 +17,7 @@ export interface RegistryPack {
     ratingCount: number;
     tags: string[];
     fileUrl: string;
+    manifest?: string;
     status: 'pending' | 'approved' | 'rejected';
     createdAt: number;
     updatedAt: number;
@@ -46,7 +47,7 @@ export interface RegistryState {
     setLanguageFilter: (lang: string | null) => void;
     setSearchQuery: (q: string) => void;
     ratePack: (packId: string, stars: number) => void;
-    installPack: (packId: string, fileUrl: string) => void;
+    installPack: (packId: string, fileUrl: string, manifest?: string) => void;
     signIn: () => void;
     signOut: () => void;
     clearPublishResult: () => void;
@@ -138,8 +139,8 @@ export function useRegistry(): RegistryState {
         vscode.postMessage({ type: 'registryRatePack', packId, stars });
     }, []);
 
-    const installPack = useCallback((packId: string, fileUrl: string) => {
-        vscode.postMessage({ type: 'registryInstallPack', packId, fileUrl });
+    const installPack = useCallback((packId: string, fileUrl: string, manifest?: string) => {
+        vscode.postMessage({ type: 'registryInstallPack', packId, fileUrl, manifest });
     }, []);
 
     const signIn = useCallback(() => {

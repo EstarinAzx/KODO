@@ -235,7 +235,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                                         key={pack.id}
                                         pack={pack}
                                         isInstalled={installedPacks.some(p => p.id === pack.id && p.installed)}
-                                        onInstall={() => registry.installPack(pack.id, pack.fileUrl)}
+                                        onInstall={() => registry.installPack(pack.id, pack.fileUrl, pack.manifest)}
                                         onRate={registry.currentUser ? (stars) => registry.ratePack(pack.id, stars) : undefined}
                                         canRate={!!registry.currentUser}
                                     />

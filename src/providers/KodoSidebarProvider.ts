@@ -231,7 +231,22 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
                 }
 
                 case 'registryInstallPack': {
-                    const manifest = await this._firebase.downloadPackFile(message.fileUrl);
+                    let manifest = null;
+
+                    // Try inline manifest first (stored as JSON string in Firestore)
+                    if (message.manifest) {
+                        try {
+                            manifest = JSON.parse(message.manifest);
+                        } catch {
+                            console.error('[KODO] Failed to parse inline manifest');
+                        }
+                    }
+
+                    // Fall back to URL download if no inline manifest
+                    if (!manifest && message.fileUrl) {
+                        manifest = await this._firebase.downloadPackFile(message.fileUrl);
+                    }
+
                     if (manifest) {
                         await this._storage.installPack(manifest);
                         await this._firebase.incrementDownloadCount(message.packId);
