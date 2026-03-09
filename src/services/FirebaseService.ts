@@ -69,33 +69,38 @@ export class FirebaseService {
         if (!await this.init()) return null;
 
         try {
-            const { GithubAuthProvider, signInWithCredential } = await import('firebase/auth');
-
             // Use VS Code's built-in GitHub authentication provider
-            // This handles the full OAuth flow automatically — no PAT needed!
             const session = await vscode.authentication.getSession('github', ['read:user'], {
                 createIfNone: true,
             });
 
             if (!session) return null;
 
-            const token = session.accessToken;
+            const githubToken = session.accessToken;
 
-            // Exchange GitHub OAuth token for Firebase credential
-            const credential = GithubAuthProvider.credential(token);
-            const userCredential = await signInWithCredential(firebaseAuth, credential);
-            const user = userCredential.user;
+            // Call our Cloud Function to exchange the GitHub token for a Firebase custom token
+            const { httpsCallable } = await import('firebase/functions');
+            const { getFunctions } = await import('firebase/functions');
+            const functions = getFunctions(firebaseApp);
+            const githubAuthFn = httpsCallable(functions, 'githubAuth');
+
+            const result: any = await githubAuthFn({ githubToken });
+            const { customToken, user: ghUser } = result.data;
+
+            // Sign in with the custom token
+            const { signInWithCustomToken } = await import('firebase/auth');
+            await signInWithCustomToken(firebaseAuth, customToken);
 
             this.currentUser = {
-                id: user.uid,
-                githubUsername: user.providerData[0]?.displayName || user.displayName || 'unknown',
-                displayName: user.displayName || 'Anonymous',
-                avatarUrl: user.photoURL || '',
+                id: ghUser.id,
+                githubUsername: ghUser.githubUsername,
+                displayName: ghUser.displayName,
+                avatarUrl: ghUser.avatarUrl,
                 publishedPackCount: 0,
             };
 
-            // Store the token for session persistence
-            await this.context.secrets.store('kodo.githubToken', token);
+            // Store the GitHub token for session persistence
+            await this.context.secrets.store('kodo.githubToken', githubToken);
 
             return this.currentUser;
         } catch (err) {
@@ -131,16 +136,22 @@ export class FirebaseService {
             const token = await this.context.secrets.get('kodo.githubToken');
             if (!token) return null;
 
-            const { GithubAuthProvider, signInWithCredential } = await import('firebase/auth');
-            const credential = GithubAuthProvider.credential(token);
-            const userCredential = await signInWithCredential(firebaseAuth, credential);
-            const user = userCredential.user;
+            // Re-exchange the stored GitHub token via Cloud Function
+            const { httpsCallable, getFunctions } = await import('firebase/functions');
+            const functions = getFunctions(firebaseApp);
+            const githubAuthFn = httpsCallable(functions, 'githubAuth');
+
+            const result: any = await githubAuthFn({ githubToken: token });
+            const { customToken, user: ghUser } = result.data;
+
+            const { signInWithCustomToken } = await import('firebase/auth');
+            await signInWithCustomToken(firebaseAuth, customToken);
 
             this.currentUser = {
-                id: user.uid,
-                githubUsername: user.providerData[0]?.displayName || user.displayName || 'unknown',
-                displayName: user.displayName || 'Anonymous',
-                avatarUrl: user.photoURL || '',
+                id: ghUser.id,
+                githubUsername: ghUser.githubUsername,
+                displayName: ghUser.displayName,
+                avatarUrl: ghUser.avatarUrl,
                 publishedPackCount: 0,
             };
 
