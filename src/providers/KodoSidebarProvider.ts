@@ -207,6 +207,11 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
                 // ─── Registry Handlers ───
 
                 case 'registryFetchPacks': {
+                    // Always send current auth state when Community tab requests packs
+                    const currentUser = this._firebase.getCurrentUser();
+                    if (currentUser) {
+                        this._view?.webview.postMessage({ type: 'registryAuthState', user: currentUser });
+                    }
                     try {
                         const result = await this._firebase.fetchPacks({
                             page: message.page,
