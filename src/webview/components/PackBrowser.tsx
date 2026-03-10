@@ -81,15 +81,15 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
         <div class="kodo-modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
             <div class="kodo-modal">
                 {/* Header */}
-                <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center justify-between mb-3" style={{ minHeight: '28px' }}>
                     <h3 class="text-sm font-bold">Template Packs</h3>
-                    {activeTab === 'community' && (
+                    <div style={{ visibility: activeTab === 'community' ? 'visible' : 'hidden' }}>
                         <AuthButton
                             user={registry.currentUser}
                             onSignIn={registry.signIn}
                             onSignOut={registry.signOut}
                         />
-                    )}
+                    </div>
                 </div>
 
                 {/* Tabs */}
