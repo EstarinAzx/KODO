@@ -36,7 +36,7 @@ export function PublishPackModal({ folders, isSignedIn, onSignIn, onClose, publi
     if (!isSignedIn) {
         return (
             <div class="kodo-modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-                <div class="kodo-modal" style={{ maxWidth: '400px' }}>
+                <div class="kodo-modal">
                     <h3 class="text-sm font-bold mb-2">📤 Publish a Pack</h3>
                     <p class="text-xs mb-4" style={{ color: 'var(--vscode-descriptionForeground)' }}>
                         Sign in with GitHub to publish your packs to the community registry.
@@ -60,7 +60,7 @@ export function PublishPackModal({ folders, isSignedIn, onSignIn, onClose, publi
     if (publishResult) {
         return (
             <div class="kodo-modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) { onClearResult(); onClose(); } }}>
-                <div class="kodo-modal" style={{ maxWidth: '400px' }}>
+                <div class="kodo-modal">
                     <div class="text-center py-4">
                         <div class="text-2xl mb-3">{publishResult.success ? '🎉' : '❌'}</div>
                         <h3 class="text-sm font-bold mb-2">

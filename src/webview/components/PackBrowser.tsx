@@ -79,7 +79,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
 
     return (
         <div class="kodo-modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-            <div class="kodo-modal" style={{ maxWidth: '520px' }}>
+            <div class="kodo-modal">
                 {/* Header */}
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-sm font-bold">📦 Template Packs</h3>

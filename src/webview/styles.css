@@ -203,11 +203,11 @@ body {
 
   /* ── Modal ── */
   .kodo-modal {
-    @apply rounded-2xl p-6 w-full max-w-lg;
+    @apply rounded-2xl p-5 w-full;
     background: var(--vscode-editor-background);
     border: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 12%, transparent);
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
-    max-height: 90vh;
+    max-height: 95vh;
     overflow-y: auto;
   }
 
