@@ -110,7 +110,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
 
                 {/* ─── Built-in Tab ─── */}
                 {activeTab === 'builtin' && (
-                    <div>
+                    <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
                         <div class="mb-4">
                             <input
                                 type="text"
@@ -121,7 +121,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                             />
                         </div>
 
-                        <div class="flex flex-col gap-3" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                        <div class="flex flex-col gap-3" style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
                             {filteredBuiltin.length === 0 ? (
                                 <div class="text-xs text-center py-6" style={{ color: 'var(--vscode-descriptionForeground)' }}>
                                     No packs found
@@ -140,7 +140,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                         </div>
 
                         {/* Footer */}
-                        <div class="flex items-center justify-between mt-4 pt-3" style={{ borderTop: '1px solid var(--vscode-widget-border, rgba(255,255,255,0.1))' }}>
+                        <div class="flex items-center justify-between pt-3 mt-auto" style={{ borderTop: '1px solid var(--vscode-widget-border, rgba(255,255,255,0.1))' }}>
                             <button
                                 class="kodo-btn-secondary flex items-center gap-1.5"
                                 onClick={handleImportPack}
@@ -155,7 +155,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
 
                 {/* ─── Community Tab ─── */}
                 {activeTab === 'community' && (
-                    <div>
+                    <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
                         {/* Search */}
                         <div class="mb-3">
                             <input
@@ -207,7 +207,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                         </div>
 
                         {/* Pack list */}
-                        <div class="flex flex-col gap-3" style={{ maxHeight: '350px', overflowY: 'auto' }}>
+                        <div class="flex flex-col gap-3" style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
                             {registry.isLoading && registry.packs.length === 0 ? (
                                 // Skeleton loaders
                                 <div class="flex flex-col gap-3">
@@ -261,7 +261,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                         </div>
 
                         {/* Footer */}
-                        <div class="flex items-center justify-between mt-4 pt-3" style={{ borderTop: '1px solid var(--vscode-widget-border, rgba(255,255,255,0.1))' }}>
+                        <div class="flex items-center justify-between pt-3 mt-auto" style={{ borderTop: '1px solid var(--vscode-widget-border, rgba(255,255,255,0.1))' }}>
                             {registry.currentUser ? (
                                 <button
                                     class="kodo-btn flex items-center gap-1.5"
