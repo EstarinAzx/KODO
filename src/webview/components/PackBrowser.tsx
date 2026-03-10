@@ -82,7 +82,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
             <div class="kodo-modal">
                 {/* Header */}
                 <div class="flex items-center justify-between mb-3">
-                    <h3 class="text-sm font-bold">📦 Template Packs</h3>
+                    <h3 class="text-sm font-bold">Template Packs</h3>
                     {activeTab === 'community' && (
                         <AuthButton
                             user={registry.currentUser}
@@ -104,7 +104,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                         class={`kodo-tab ${activeTab === 'community' ? 'active' : ''}`}
                         onClick={() => setActiveTab('community')}
                     >
-                        🌐 Community
+                        Community
                     </button>
                 </div>
 
@@ -171,7 +171,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                         <div class="flex items-center gap-2 mb-3 flex-wrap">
                             <select
                                 class="kodo-input"
-                                style={{ width: 'auto', fontSize: '11px', padding: '4px 8px', borderRadius: '999px' }}
+                                style={{ width: 'auto', fontSize: '13px', padding: '5px 10px', borderRadius: '999px' }}
                                 value={registry.sortBy}
                                 onChange={(e) => registry.setSortBy((e.target as HTMLSelectElement).value as any)}
                             >
@@ -184,7 +184,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                                 <button
                                     class={`kodo-tag-pill ${!registry.languageFilter ? 'active' : ''}`}
                                     onClick={() => registry.setLanguageFilter(null)}
-                                    style={{ fontSize: '10px', background: !registry.languageFilter ? 'var(--vscode-list-hoverBackground)' : 'transparent' }}
+                                    style={{ fontSize: '12px', background: !registry.languageFilter ? 'var(--vscode-list-hoverBackground)' : 'transparent' }}
                                 >
                                     All
                                 </button>
@@ -196,7 +196,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                                             registry.languageFilter === lang.toLowerCase() ? null : lang.toLowerCase()
                                         )}
                                         style={{
-                                            fontSize: '10px',
+                                            fontSize: '12px',
                                             background: registry.languageFilter === lang.toLowerCase() ? 'var(--vscode-list-hoverBackground)' : 'transparent',
                                         }}
                                     >
@@ -217,7 +217,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                                 </div>
                             ) : registry.packs.length === 0 ? (
                                 <div class="kodo-empty py-8">
-                                    <div class="text-2xl mb-2">🌐</div>
+                                    <div class="text-2xl mb-2"> </div>
                                     <div class="text-xs">
                                         {registry.error
                                             ? "Can't reach the registry. Check your connection."
@@ -268,7 +268,7 @@ export function PackBrowser({ packs, installedPacks, onClose, folders }: PackBro
                                     onClick={() => setShowPublishModal(true)}
                                     style={{ fontSize: '11px' }}
                                 >
-                                    📤 Publish a Pack
+                                    Publish a Pack
                                 </button>
                             ) : (
                                 <span class="text-xs" style={{ color: 'var(--vscode-descriptionForeground)', opacity: 0.6 }}>

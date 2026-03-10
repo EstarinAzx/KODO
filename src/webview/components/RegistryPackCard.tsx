@@ -49,7 +49,7 @@ export function RegistryPackCard({ pack, isInstalled, onInstall, onUninstall, on
 
                     {/* Downloads */}
                     <div class="flex items-center gap-1 mb-2 text-xs" style={{ color: 'var(--vscode-descriptionForeground)', opacity: 0.7 }}>
-                        <span class="kodo-badge downloads">⬇ {formatDownloads(pack.downloads)}</span>
+                        <span class="kodo-badge downloads">{formatDownloads(pack.downloads)} downloads</span>
                     </div>
 
                     {/* Rating */}

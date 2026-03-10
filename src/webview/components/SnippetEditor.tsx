@@ -119,7 +119,7 @@ export function SnippetEditor({ snippet, data, onClose }: SnippetEditorProps) {
                         color: 'var(--vscode-descriptionForeground)',
                     }}
                 >
-                    💡 <strong>Template variables:</strong> Use <code>{'${1:placeholder}'}</code> for tab stops.
+                    <strong>Template variables:</strong> Use <code>{'${1:placeholder}'}</code> for tab stops.
                 </div>
 
                 {/* Buttons */}
