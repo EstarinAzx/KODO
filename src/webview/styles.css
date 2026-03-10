@@ -286,18 +286,17 @@ body {
   /* Line number gutter */
   .kodo-code-gutter {
     flex-shrink: 0;
-    padding: 8px 0;
+    padding: 0;
     min-width: 38px;
     text-align: right;
     user-select: none;
     background: color-mix(in srgb, var(--vscode-editor-background) 95%, var(--vscode-panel-border, #666) 5%);
     border-right: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 10%, transparent);
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: none;
-    /* Firefox */
-    -ms-overflow-style: none;
-    /* IE/Edge */
+    overflow: hidden;
+  }
+
+  .kodo-gutter-inner {
+    padding: 8px 0;
   }
 
   .kodo-code-gutter::-webkit-scrollbar {

@@ -156,13 +156,13 @@ export function CodeEditor({ code, language, onCodeChange }: CodeEditorProps) {
         if (!textarea) return;
         const editorBody = textarea.parentElement;
         const highlightEl = editorBody?.querySelector('.kodo-code-highlight') as HTMLElement;
-        const gutterEl = textarea.closest('.kodo-code-editor')?.querySelector('.kodo-code-gutter') as HTMLElement;
+        const gutterInner = textarea.closest('.kodo-code-editor')?.querySelector('.kodo-gutter-inner') as HTMLElement;
         if (highlightEl) {
             // Use CSS transform for pixel-perfect alignment (no scrollHeight mismatch)
             highlightEl.style.transform = `translate(${-textarea.scrollLeft}px, ${-textarea.scrollTop}px)`;
         }
-        if (gutterEl) {
-            gutterEl.scrollTop = textarea.scrollTop;
+        if (gutterInner) {
+            gutterInner.style.transform = `translateY(${-textarea.scrollTop}px)`;
         }
     }, []);
 
@@ -188,10 +188,12 @@ export function CodeEditor({ code, language, onCodeChange }: CodeEditorProps) {
     return (
         <div class="kodo-code-editor" style={{ height: `${editorHeight}px` }}>
             {/* Line numbers gutter */}
-            <div class="kodo-code-gutter" style={{ height: needsScroll ? undefined : `${editorHeight}px` }}>
-                {lineNumbers.map(n => (
-                    <div key={n} class="kodo-line-number">{n}</div>
-                ))}
+            <div class="kodo-code-gutter" style={{ height: `${editorHeight}px` }}>
+                <div class="kodo-gutter-inner">
+                    {lineNumbers.map(n => (
+                        <div key={n} class="kodo-line-number">{n}</div>
+                    ))}
+                </div>
             </div>
 
             {/* Editor area */}
