@@ -110,3 +110,17 @@ export const CheckCircleIcon = ({ size = 14, ...rest }: IconProps) => (
     </svg>
 );
 
+export const CopyIcon = ({ size = 14, ...rest }: IconProps) => (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="currentColor" {...rest}>
+        <path d="M4 1.5H3a2 2 0 00-2 2V14a2 2 0 002 2h6a2 2 0 002-2v-1h-1v1a1 1 0 01-1 1H3a1 1 0 01-1-1V3.5a1 1 0 011-1h1v-1z" />
+        <path d="M13 0H7a2 2 0 00-2 2v10a2 2 0 002 2h6a2 2 0 002-2V2a2 2 0 00-2-2zm-6 1h6a1 1 0 011 1v10a1 1 0 01-1 1H7a1 1 0 01-1-1V2a1 1 0 011-1z" />
+    </svg>
+);
+
+export const FolderMoveIcon = ({ size = 14, ...rest }: IconProps) => (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="currentColor" {...rest}>
+        <path d="M1.5 2A1.5 1.5 0 000 3.5v9A1.5 1.5 0 001.5 14h13a1.5 1.5 0 001.5-1.5V5a1.5 1.5 0 00-1.5-1.5H7.707L6.354 2.146A.5.5 0 006 2H1.5zM1 3.5a.5.5 0 01.5-.5H6l1.354 1.354A.5.5 0 007.707 4.5H14.5a.5.5 0 01.5.5v7.5a.5.5 0 01-.5.5h-13a.5.5 0 01-.5-.5v-9z" />
+        <path d="M8 7l3 2.5L8 12V9.75H5v-1.5h3V7z" />
+    </svg>
+);
+

@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { useState, useRef } from 'preact/hooks';
-import { Snippet, Tag } from '../hooks/useKodoState';
+import { Snippet, Tag, Folder } from '../hooks/useKodoState';
 import { SnippetCard } from './SnippetCard';
 import { SnippetIcon } from '../lib/icons';
 import { vscode } from '../lib/vscodeApi';
@@ -8,10 +8,11 @@ import { vscode } from '../lib/vscodeApi';
 interface SnippetListProps {
     snippets: Snippet[];
     tags: Tag[];
+    folders: Folder[];
     onEditSnippet: (snippet: Snippet) => void;
 }
 
-export function SnippetList({ snippets, tags, onEditSnippet }: SnippetListProps) {
+export function SnippetList({ snippets, tags, folders, onEditSnippet }: SnippetListProps) {
     const [dragOverId, setDragOverId] = useState<string | null>(null);
     const [dragOverPosition, setDragOverPosition] = useState<'above' | 'below'>('below');
     const dragSourceId = useRef<string | null>(null);
@@ -110,6 +111,7 @@ export function SnippetList({ snippets, tags, onEditSnippet }: SnippetListProps)
                         <SnippetCard
                             snippet={snippet}
                             tags={tags}
+                            folders={folders}
                             onEdit={onEditSnippet}
                             onDragStartReorder={handleDragStartReorder}
                             onDragEndReorder={handleDragEnd}

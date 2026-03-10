@@ -58,6 +58,7 @@ function App() {
             <SnippetList
                 snippets={state.filteredSnippets}
                 tags={state.data.tags}
+                folders={state.data.folders}
                 onEditSnippet={state.setEditingSnippet}
             />
 

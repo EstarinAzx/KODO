@@ -1,6 +1,5 @@
 import { h } from 'preact';
 import { RegistryUser } from '../hooks/useRegistry';
-import { vscode } from '../lib/vscodeApi';
 
 interface AuthButtonProps {
     user: RegistryUser | null;
@@ -12,21 +11,49 @@ export function AuthButton({ user, onSignIn, onSignOut }: AuthButtonProps) {
     if (user) {
         return (
             <div class="flex items-center gap-2">
-                {user.avatarUrl && (
-                    <img
-                        src={user.avatarUrl}
-                        alt={user.displayName}
-                        class="rounded-full"
-                        style={{ width: '20px', height: '20px' }}
-                    />
-                )}
-                <span class="text-xs truncate" style={{ maxWidth: '100px' }}>
-                    {user.githubUsername || user.displayName}
-                </span>
+                <div
+                    class="flex items-center gap-2 rounded-full px-1 pr-2"
+                    style={{
+                        background: 'color-mix(in srgb, var(--vscode-badge-background) 30%, transparent)',
+                    }}
+                >
+                    {user.avatarUrl ? (
+                        <img
+                            src={user.avatarUrl}
+                            alt={user.displayName}
+                            class="rounded-full"
+                            style={{
+                                width: '24px',
+                                height: '24px',
+                                border: '2px solid color-mix(in srgb, var(--vscode-focusBorder) 40%, transparent)',
+                            }}
+                        />
+                    ) : (
+                        <div
+                            class="rounded-full flex items-center justify-center"
+                            style={{
+                                width: '24px',
+                                height: '24px',
+                                background: 'var(--vscode-badge-background)',
+                                color: 'var(--vscode-badge-foreground)',
+                                fontSize: '11px',
+                                fontWeight: 'bold',
+                            }}
+                        >
+                            {(user.displayName || '?')[0].toUpperCase()}
+                        </div>
+                    )}
+                    <span
+                        class="text-xs truncate"
+                        style={{ maxWidth: '90px', color: 'var(--vscode-foreground)' }}
+                    >
+                        {user.githubUsername || user.displayName}
+                    </span>
+                </div>
                 <button
                     class="kodo-btn-ghost text-xs"
                     onClick={onSignOut}
-                    style={{ fontSize: '10px', opacity: 0.6 }}
+                    style={{ fontSize: '10px', opacity: 0.5, padding: '2px 4px' }}
                 >
                     Sign out
                 </button>

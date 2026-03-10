@@ -131,7 +131,9 @@ export type MessageFromWebview =
     | { type: 'registryRatePack'; packId: string; stars: number }
     | { type: 'registryPublishPack'; folderId: string; name: string; description: string; icon: string; language: string; version: string }
     | { type: 'registrySignIn' }
-    | { type: 'registrySignOut' };
+    | { type: 'registrySignOut' }
+    | { type: 'duplicateSnippet'; snippetId: string }
+    | { type: 'moveSnippet'; snippetId: string; targetFolderId: string };
 
 // ─── Utility ───
 

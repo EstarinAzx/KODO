@@ -64,6 +64,34 @@ export class KodoSidebarProvider implements vscode.WebviewViewProvider {
                     this.sendDataToWebview();
                     break;
 
+                case 'duplicateSnippet': {
+                    const original = this._storage.getSnippetById(message.snippetId);
+                    if (original) {
+                        await this._storage.saveSnippet({
+                            name: original.name + ' (Copy)',
+                            code: original.code,
+                            language: original.language,
+                            description: original.description,
+                            folderId: original.folderId,
+                            tags: [...original.tags],
+                        });
+                        this.sendDataToWebview();
+                    }
+                    break;
+                }
+
+                case 'moveSnippet': {
+                    const snippetToMove = this._storage.getSnippetById(message.snippetId);
+                    if (snippetToMove) {
+                        await this._storage.updateSnippet({
+                            ...snippetToMove,
+                            folderId: message.targetFolderId,
+                        });
+                        this.sendDataToWebview();
+                    }
+                    break;
+                }
+
                 case 'createFolder':
                     await this._storage.createFolder(message.folder);
                     this.sendDataToWebview();
