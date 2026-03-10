@@ -46,15 +46,17 @@ export function CodeEditor({ code, language, onCodeChange }: CodeEditorProps) {
             e.preventDefault();
 
             if (e.shiftKey) {
-                // Dedent: remove up to 2 leading spaces from the current line
+                // Dedent: remove up to 4 leading spaces from the current line
                 const lineStart = value.lastIndexOf('\n', start - 1) + 1;
                 const lineText = value.substring(lineStart, end);
-                if (lineText.startsWith('  ')) {
+                if (lineText.startsWith('    ')) {
+                    replaceRange(textarea, lineStart, lineStart + 4, '', -4 + (start - lineStart));
+                } else if (lineText.startsWith('  ')) {
                     replaceRange(textarea, lineStart, lineStart + 2, '', -2 + (start - lineStart));
                 }
             } else {
-                // Indent: insert 2 spaces
-                replaceRange(textarea, start, end, '  ');
+                // Indent: insert 4 spaces
+                replaceRange(textarea, start, end, '    ');
             }
             return;
         }
@@ -76,14 +78,14 @@ export function CodeEditor({ code, language, onCodeChange }: CodeEditorProps) {
             const bracketPairs: Record<string, string> = { '{': '}', '[': ']', '(': ')' };
             if (charBefore && bracketPairs[charBefore] && charAfter === bracketPairs[charBefore]) {
                 // Insert newline + indent + extra indent, then another newline + original indent
-                const insertion = '\n' + indent + '  \n' + indent;
-                replaceRange(textarea, start, end, insertion, indent.length + 3); // cursor on the indented middle line
+                const insertion = '\n' + indent + '    \n' + indent;
+                replaceRange(textarea, start, end, insertion, indent.length + 5); // cursor on the indented middle line
                 return;
             }
 
             // If line ends with an opening bracket, add extra indent
             if (charBefore && '{[('.includes(charBefore)) {
-                replaceRange(textarea, start, end, '\n' + indent + '  ');
+                replaceRange(textarea, start, end, '\n' + indent + '    ');
                 return;
             }
 

@@ -384,7 +384,7 @@ body {
     box-sizing: border-box;
     letter-spacing: normal;
     word-spacing: normal;
-    tab-size: 2;
+    tab-size: 4;
   }
 
   .kodo-code-textarea::selection {
