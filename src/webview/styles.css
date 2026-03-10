@@ -194,7 +194,7 @@ body {
 
   /* ── Modal overlay (frosted) ── */
   .kodo-modal-overlay {
-    @apply fixed inset-0 flex items-center justify-center;
+    @apply fixed inset-0 flex items-stretch justify-center;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -203,11 +203,10 @@ body {
 
   /* ── Modal ── */
   .kodo-modal {
-    @apply rounded-2xl p-5 w-full;
+    @apply rounded-none p-5 w-full flex flex-col;
     background: var(--vscode-editor-background);
     border: 1px solid color-mix(in srgb, var(--vscode-panel-border, #666) 12%, transparent);
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
-    max-height: 95vh;
     overflow-y: auto;
   }
 
